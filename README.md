@@ -1,136 +1,155 @@
 # Profit-Stabilization-Predictive-Risk-Retention
 
 ## Research Question
+
 **Can low-risk health-care members be reliably identified using a reduced, behavior-oriented feature set, and what is the minimum predictive structure needed to stabilize cost-risk segmentation under uncertainty?**
 
-This repository contains the complete workflow for analyzing MEPS (Medical Expenditure Panel Survey) data to build a **minimal-feature, behavior-driven risk segmentation model**. The goal is to identify **stable low-risk members** whose health-care cost profile remains predictably low, enabling **profit stabilization**, **risk retention**, and **actuarially sound pricing design**.
+This repository contains a **complete, research-to-deployment pipeline** built on MEPS (Medical Expenditure Panel Survey) data to study **low-risk member identification**, **segmentation stability**, and **uncertainty-aware pricing insights**.
+
+The project combines:
+
+* rigorous statistical / ML experimentation,
+* a deployable production model,
+* and an interactive analytics web platform that operationalizes the research findings.
 
 ---
 
-## Objective
-1. Build a **reduced feature set** focused on lifestyle, behavior, clinical burden, and utilization.
-2. Determine the **minimum predictive structure** capable of reliably identifying low-risk health-care members.
-3. Characterize low-risk individuals in terms of:
-   - Health behaviors  
-   - Chronic condition burden  
-   - Functional limitations  
-   - Utilization patterns  
-   - Annual expenditures and catastrophic-risk avoidance
-4. Provide a foundation for future **multi-year volatility modeling** and **risk-retention strategies**.
+## What This Repository Does (End-to-End)
+
+### 1. **Data → Model Pipeline (Fully Implemented)**
+
+* Accepts **processed MEPS person-year CSVs** (e.g., HC-251 2023).
+* Enforces **strict leakage control** (label-defining cost variables excluded from predictors).
+* Constructs cumulative feature blocks (B0 → B5) to identify the **minimum predictive structure**.
+* Trains and evaluates multiple model families (Logistic, RF, XGBoost).
+* Selects a **deployable production model** based on:
+
+  * discrimination,
+  * calibration,
+  * and bootstrap stability.
+
+> Final deployed model: **XGBoost, B3_chronic block**
+> (behavior + mental health + functional status + chronic burden)
 
 ---
 
-## Data Source
-**Medical Expenditure Panel Survey (MEPS) – Household Component**  
-Unit of analysis: **Adult person-year**  
-Analysis type: Empirical, ML-based segmentation and predictive modeling.
+### 2. **Model Ladder & Stability Evidence (Fully Implemented)**
+
+Instead of a single opaque model, the project builds a **model ladder**:
+
+| Block  | Description               | Purpose                  |
+| ------ | ------------------------- | ------------------------ |
+| B0     | Behavior only             | Baseline signal          |
+| B1     | + Mental health           | Early improvement        |
+| B2     | + Functional limits       | Structural stability     |
+| **B3** | **+ Chronic burden**      | **Minimum stable model** |
+| B4     | + SES & insurance         | Incremental gain         |
+| B5     | + Utilization (non-label) | Upper-bound benchmark    |
+
+Each block is evaluated for:
+
+* AUC / Brier score,
+* calibration,
+* **bootstrap variance of low-risk segment size**.
+
+This directly answers the research question:
+**B3 is the minimum predictive structure that stabilizes segmentation under uncertainty.**
 
 ---
 
-## Feature Framework (Reduced + High-Signal Set)
+### 3. **Production Inference API (Implemented)**
 
-### 1. **Demographics**
-- `AGELAST`, `SEX`
-- `RACETHX`, `HISPANX`
-- `EDUCYR` or `HIDEG`
-- `MARRY53X`
+* The selected model pipeline (preprocessing + encoding + classifier) is serialized (`.joblib`).
+* A FastAPI service exposes:
 
-### 2. **Socioeconomic**
-- `FAMINCxx`
-- `POVCATxx`
-- `TTLPxxX`
-- Employment status (`EMPST53` or `EMPST22`)
+  * batch scoring,
+  * single-member scoring,
+  * schema validation via a model card.
+* The API rejects inputs with missing required features (as shown in production UI).
 
-### 3. **Insurance Coverage**
-- `INSURCxx`
-- `PRVEVxx`, `MCREVxx`, `MCDEVxx`
-- `UNINSxx`
-
-### 4. **Clinical Burden (Major Chronic Conditions)**
-- Hypertension (`HIBPDX`)
-- Diabetes (`DIABDX`)
-- CHD / MI / Stroke (`CHDDX`, `MIDX`, `STROKDX`)
-- COPD / Emphysema (`EMPHDX`)
-- High cholesterol (`CHOLDX`)
-- Arthritis, Asthma (`ARTHDX`, `ASTHDX`)
-- Cancer indicators (`CANCERDX`)
-- Mental illness flags (`ANYLMI22`)
-- COVID diagnosis (`COVIDEVER53`)
-
-### 5. **Self-Rated Health & Mental Health**
-- Physical health: `RTHLTH53`
-- Mental health: `MNHLTH53`
-- Psychological distress: `K6SUM42`
-- Depression screening: `PHQ242`
-
-### 6. **Functioning & Limitations**
-- ADL help: `ADLHLP31`
-- IADL help: `IADLHP31`
-- Mobility / cognitive / work limitations (`WLKLIM`, `COGLIM`, `WRKLIM`, `SOCLIM`)
-
-### 7. **Behavioral & Lifestyle Indicators** *(Core Reduced Feature Block)*
-- BMI (`ADBMI42`)
-- Exercise frequency (`PHYEXE53`)
-- Smoking (`OFTSMK53` or `NOSMOK42`)
-- Healthy eating indicator (`EATHLT42`)
-- Alcohol use (`ADOFTALC42` or `ADRNK542_M20`)
-
-### 8. **Utilization Indicators**
-- Office visits: `OBTOTVxx`
-- Outpatient visits: `OPTOTVxx`
-- ER visits: `ERTOTxx`
-- Inpatient discharges: `IPDISxx`
-- Prescription fills: `RXTOTxx`
-
-### 9. **Expenditure Targets**
-- Total annual spending: `TOTEXPxx` (Primary)
-- Optional: `TOTSLFxx`, `TOTPRVxx`, `TOTMCRxx`, `TOTMCDxx`, `RXEXPxx`
+No retraining is required at inference time.
 
 ---
 
-## Approach
+### 4. **Interactive Analytics Web Platform (Implemented)**
 
-### **Step 1: Data Preparation**
-- Import MEPS consolidated person-level file.
-- Select core reduced-feature parameter blocks.
-- Clean, standardize, and encode variables.
-- Generate candidate labels:
-  - **Low-Risk Prototype** (low expenditure, low acute care, minimal chronic burden)
-  - Catastrophic-risk flags (e.g., spending > $20k)
+A deployed web application operationalizes the research:
 
-### **Step 2: Exploratory Analysis**
-- Distribution summaries for all parameter blocks.
-- Correlations between behaviors, clinical factors, utilization, and total cost.
-- Compare **low-risk vs non-low-risk** along:
-  - Health behaviors
-  - Chronic disease load
-  - Functioning & limitations
-  - Utilization intensity
+**Core capabilities**
 
-### **Step 3: Minimal Predictive Structure Identification**
-Models tested:
-- Logistic regression (baseline)
-- Gradient Boosted Trees (XGBoost/LightGBM)
-- Random Forest
-- Regularized GLMs (L1/L2)
-- Small NN for feature-compressive tests
+* Upload and validate MEPS-derived datasets (2023 supported).
+* Run **live backend inference** using the production model.
+* Explore **member-level risk scores** and **population-level segmentation**.
+* Visualize:
 
-We evaluate:
-- How accurately low-risk members can be predicted
-- Which *smallest subset* of variables gives stable performance
-- Whether behaviors alone can define a reliable low-risk segment
-- Feature importance rankings and interaction structure
+  * clustering structure (t-SNE),
+  * low-risk profiles,
+  * behavioral and chronic burden signatures.
+* Quantify **uncertainty and stability** via bootstrap simulation.
+* Run **fairness and compliance diagnostics**.
+* Generate **research-ready reports** (PDF + CSV exports).
 
-### **Step 4: Stability & Uncertainty Testing**
-- Bootstrap uncertainty quantification  
-- Sensitivity to feature removal  
-- Model collapse checks under reduced structures  
-- Measure variance of predictions across random seeds
+The UI reflects insurer-style analytics rather than a toy demo.
 
-### **Step 5: Interpretation**
-Outputs include:
-- Predictive accuracy of minimal feature models
-- Identification of the “core behavioral signal”  
-- Mapping of clinical and utilization add-on value  
-- Characterization of low-risk profiles  
-- Actuarial implications for pricing, segmentation, and retention  
+---
+
+## What Is Dynamic vs Static Right Now
+
+### ✅ Fully Dynamic
+
+* CSV ingestion for MEPS-aligned, model-ready files.
+* Backend model scoring (real predictions).
+* Segmentation, clustering, and summaries.
+* Bootstrap stability metrics.
+* Fairness metrics computed from scored data.
+* Report generation using live results.
+
+### ⚠️ Partially Static / Placeholder
+
+* Some UI explanations (text blocks) are descriptive rather than computed.
+* Certain visual labels (e.g., segment names) are rule-based, not learned.
+* Model selection UI is locked to the production model (by design).
+* Multi-year (panel-to-panel) temporal validation is not yet automated in the UI.
+
+These are **deliberate design choices**, not architectural gaps.
+
+---
+
+## Validity Across MEPS Years
+
+The pipeline is **year-agnostic by construction**, provided that:
+
+* the input file is a **single MEPS person-year**,
+* variables are harmonized to the expected schema,
+* labels are recomputed per year.
+
+This allows:
+
+* retraining on new years (e.g., 2024, 2025),
+* cross-year stability testing,
+* future panel-based volatility modeling.
+
+---
+
+## Why This Is Not Just a Dashboard
+
+This project is not a visualization layer on top of a model.
+
+It is:
+
+* a **research artifact**,
+* a **deployable inference system**,
+* and an **auditable analytics product**.
+
+Every chart corresponds to a model, statistic, or bootstrap procedure implemented in code and validated empirically.
+
+---
+
+## Future Extensions (Planned)
+
+* Temporal validation across MEPS panels.
+* SHAP-based explainability comparisons (B3 vs B5).
+* Fairness audits under alternative SES definitions.
+* Policy simulation (retention / pricing stress tests).
+* Automated ingestion of raw MEPS releases.
+* Multi-model comparison UI (unlock B4/B5 for research mode).
