@@ -1,5 +1,17 @@
 # Profit-Stabilization-Predictive-Risk-Retention
 
+Recap with Prof. Jing and review
+
+1. why ER is used ?
+2. check cost differnce ?
+3. behvaioural topics, deep research ?
+4. how was the model used ? needs clarity? how is better than existing models?
+
+research spring 2026
+
+1. innovative insurance
+2. Variable annunities, use this premium for investment
+
 ## Research Question
 
 **Can low-risk health-care members be reliably identified using a reduced, behavior-oriented feature set, and what is the minimum predictive structure needed to stabilize cost-risk segmentation under uncertainty?**
