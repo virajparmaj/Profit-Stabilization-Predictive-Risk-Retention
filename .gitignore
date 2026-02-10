@@ -1,2 +1,3 @@
 data_raw
-notebooks/report_figures.DS_Store
+notebooks/report_figures
+.DS_Store
