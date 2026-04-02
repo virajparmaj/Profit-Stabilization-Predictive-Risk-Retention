@@ -1,3 +1,7 @@
 data_raw
 notebooks/report_figures
 .DS_Store
+site/node_modules
+site/dist
+data_processed
+notebooks/models

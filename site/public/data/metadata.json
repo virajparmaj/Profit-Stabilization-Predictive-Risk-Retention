@@ -1,0 +1,1024 @@
+{
+  "source": {
+    "raw": "data_raw/h251.csv",
+    "lowRisk": "data_processed/meps_model_ready_2023_low_risk_business_proxies_v2.csv",
+    "generatedFrom": "scripts/build_affordability_data.py"
+  },
+  "dataset": {
+    "year": 2023,
+    "rowCount": 18919,
+    "quintileThresholds": [
+      36000.0,
+      67439.0,
+      107978.0,
+      170200.0
+    ]
+  },
+  "specialValues": {
+    "-1": "Inapplicable / out of universe for that survey item",
+    "-7": "Refused",
+    "-8": "Don't know",
+    "-15": "Cannot be computed"
+  },
+  "valueLabels": {
+    "AFRDCA42": {
+      "1": "Yes",
+      "2": "No",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know"
+    },
+    "AFRDDN42": {
+      "1": "Yes",
+      "2": "No",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know"
+    },
+    "AFRDPM42": {
+      "1": "Yes",
+      "2": "No",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know"
+    },
+    "DLAYCA42": {
+      "1": "Yes",
+      "2": "No",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know"
+    },
+    "DLAYDN42": {
+      "1": "Yes",
+      "2": "No",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know"
+    },
+    "DLAYPM42": {
+      "1": "Yes",
+      "2": "No",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know"
+    },
+    "HAVEUS42": {
+      "1": "Yes",
+      "2": "No",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know",
+      "-15": "Cannot be computed"
+    },
+    "YNOUSC42_M18": {
+      "1": "Seldom or never sick",
+      "2": "Recently moved to area",
+      "3": "Just changed insurance plans",
+      "4": "No health insurance, other insurance-related issue",
+      "5": "Don't know where to go for care",
+      "6": "Usual source of care in this area no longer available",
+      "7": "Likes to go to different places for different health needs",
+      "8": "Don't use doctors / treat self",
+      "9": "Cost of medical care",
+      "10": "No health insurance",
+      "91": "Other reason",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know"
+    },
+    "INSCOV23": {
+      "1": "Any private",
+      "2": "Public only",
+      "3": "Uninsured"
+    },
+    "UNINS23": {
+      "1": "Uninsured all of 2023",
+      "2": "Insured for all or part of 2023"
+    },
+    "POVCAT23": {
+      "1": "Negative or poor (<100%)",
+      "2": "Near poor (100% to <125%)",
+      "3": "Low income (125% to <200%)",
+      "4": "Middle income (200% to <400%)",
+      "5": "High income (400%+)"
+    },
+    "REGION23": {
+      "1": "Northeast",
+      "2": "Midwest",
+      "3": "South",
+      "4": "West",
+      "-1": "Inapplicable"
+    },
+    "RACETHX": {
+      "1": "Hispanic",
+      "2": "Non-Hispanic White only",
+      "3": "Non-Hispanic Black only",
+      "4": "Non-Hispanic Asian only",
+      "5": "Non-Hispanic Other race or multi-race"
+    },
+    "FTSTU23X": {
+      "1": "Full-time student",
+      "2": "Part-time student",
+      "3": "Not a student",
+      "-1": "Not ages 17-23",
+      "-7": "Refused",
+      "-8": "Don't know"
+    },
+    "EMPST53": {
+      "1": "Employed at interview date",
+      "2": "Has a job to return to",
+      "3": "Unemployed",
+      "4": "Not employed during round",
+      "-1": "Inapplicable",
+      "-7": "Refused",
+      "-8": "Don't know",
+      "-15": "Cannot be computed"
+    },
+    "AFFORD_ANY": {
+      "1": "Could not afford at least one type of care",
+      "0": "No reported affordability problem across the three flags"
+    },
+    "DELAY_ANY": {
+      "1": "Delayed at least one type of care due to cost",
+      "0": "No reported delay across the three cost flags"
+    },
+    "CAN_AFFORD_ALL": {
+      "1": "Reported no affordability problem across all three care types",
+      "0": "Reported at least one affordability problem"
+    },
+    "COST_REASON_NO_USC": {
+      "1": "Cost of medical care",
+      "0": "Another or unknown reason"
+    },
+    "FAMILY_INCOME_QUINTILE": {
+      "1": "Q1 lowest income",
+      "2": "Q2 lower-middle income",
+      "3": "Q3 middle income",
+      "4": "Q4 upper-middle income",
+      "5": "Q5 highest income"
+    },
+    "EDUCATION_BAND": {
+      "Less than high school": "Less than high school",
+      "High school": "High school or GED",
+      "Some college": "Some college / associate",
+      "Bachelor": "Bachelor's degree",
+      "Graduate": "Graduate or professional degree"
+    },
+    "STUDENT_GROUP": {
+      "Full-time student": "Full-time student",
+      "Part-time student": "Part-time student",
+      "Not a student": "Not a student"
+    },
+    "EMPLOYMENT_BAND": {
+      "Employed at interview date": "Employed at interview date",
+      "Has a job to return to": "Has a job to return to",
+      "Unemployed": "Unemployed",
+      "Not employed during round": "Not employed during round"
+    },
+    "LOW_RISK": {
+      "1": "Low risk",
+      "0": "Not low risk"
+    }
+  },
+  "variableLabels": {
+    "PERWT23F": "Person weight",
+    "AFRDCA42": "Afford medical",
+    "AFRDDN42": "Afford dental",
+    "AFRDPM42": "Afford meds",
+    "DLAYCA42": "Delay medical",
+    "DLAYDN42": "Delay dental",
+    "DLAYPM42": "Delay meds",
+    "HAVEUS42": "Usual care",
+    "YNOUSC42_M18": "No-USC reason",
+    "TOTEXP23": "Total spend",
+    "TOTSLF23": "Out-of-pocket",
+    "TOTPRV23": "Private spend",
+    "TOTMCR23": "Medicare spend",
+    "TOTMCD23": "Medicaid spend",
+    "INSCOV23": "Insurance",
+    "UNINS23": "Uninsured",
+    "POVCAT23": "Poverty",
+    "FAMINC23": "Family income",
+    "EDUCYR": "Education years",
+    "EMPST53": "Employment",
+    "REGION23": "Region",
+    "RACETHX": "Race group",
+    "OBTOTV23": "Office visits",
+    "ERTOT23": "ER visits",
+    "IPDIS23": "Inpatient",
+    "RXTOT23": "Prescriptions",
+    "FTSTU23X": "Student status",
+    "LOW_RISK": "Low risk",
+    "LOW_SPEND": "Low spend",
+    "CATA_10K": "Catastrophic 10k",
+    "CATA_20K": "Catastrophic 20k",
+    "CHRONIC_CT": "Chronic count",
+    "LIMIT_CT": "Limitation count",
+    "CHRONIC_BURDEN_BIN": "Chronic burden",
+    "LIMIT_BURDEN_BIN": "Limitation burden",
+    "NONACUTE_UTIL_CT": "Non-acute count",
+    "NONACUTE_UTIL_BAND": "Non-acute band",
+    "ACUTE_UTIL_ANY": "Acute any",
+    "SPEND_BAND_2023": "Spend band",
+    "family_income_quintile": "Income quintile",
+    "family_income_quintile_label": "Income quintile",
+    "education_band": "Education band",
+    "education_band_label": "Education band",
+    "employment_band": "Employment",
+    "employment_band_label": "Employment",
+    "racethx_label": "Race group",
+    "age_band": "Age band",
+    "age_focus_17_23": "Age 17-23",
+    "student_group": "Student group",
+    "student_group_label": "Student group",
+    "afford_any": "Afford barrier",
+    "delay_any": "Cost delay",
+    "can_afford_all": "No barrier",
+    "cost_reason_no_usc": "Cost reason",
+    "oop_share": "OOP share",
+    "low_risk": "Low risk"
+  },
+  "sections": [
+    {
+      "id": "overview",
+      "title": "Overview",
+      "description": "Landing summary for the affordability, delay, access, and low-risk story, with income, education, and broad race comparisons surfaced up front."
+    },
+    {
+      "id": "affordability",
+      "title": "Could Not Afford Care",
+      "description": "Direct affordability barriers paired with spending, insurance, income, education, and broad race context."
+    },
+    {
+      "id": "delay",
+      "title": "Delayed Due To Cost",
+      "description": "Cost-driven postponement of care, downstream burden patterns, and subgroup differences across the same fairness lenses."
+    },
+    {
+      "id": "no_usc",
+      "title": "Proxy Why They Didn't Buy",
+      "description": "Proxy-only section using usual source of care and the reason for not having one, clearly separated from direct affordability measures."
+    },
+    {
+      "id": "can_afford",
+      "title": "Can Afford Cohort",
+      "description": "Requested comparisons inside the cohort reporting no affordability barriers, with income and education framed as descriptive gradients rather than causal drivers."
+    },
+    {
+      "id": "low_risk",
+      "title": "Low-Risk Subsidy Story",
+      "description": "Acquisition, payer-mix, subgroup equity checks, and scenario sizing using the existing low-risk cohort."
+    },
+    {
+      "id": "student",
+      "title": "Student Lens",
+      "description": "Ages 17-23 filtered by student status, spending, delay, and low-risk signals."
+    }
+  ],
+  "questions": [
+    {
+      "id": "afford-med",
+      "section": "affordability",
+      "title": "How many people could not afford medical care?",
+      "chartKind": "bar",
+      "variables": [
+        "AFRDCA42",
+        "PERWT23F"
+      ],
+      "howToRead": "Each bar is a weighted population estimate. The Yes bar represents people who reported they could not afford medical care; the No bar is everyone who answered No among valid responses.",
+      "featured": true
+    },
+    {
+      "id": "afford-dental",
+      "section": "affordability",
+      "title": "How many people could not afford dental care?",
+      "chartKind": "bar",
+      "variables": [
+        "AFRDDN42",
+        "PERWT23F"
+      ],
+      "howToRead": "Compare the weighted Yes and No bars to see how dental affordability pressure differs from the medical-care pattern."
+    },
+    {
+      "id": "afford-rx",
+      "section": "affordability",
+      "title": "How many people could not afford prescribed medicine?",
+      "chartKind": "bar",
+      "variables": [
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "The Yes bar estimates people who reported they could not afford prescribed medicines, weighted to the population."
+    },
+    {
+      "id": "afford-any",
+      "section": "affordability",
+      "title": "What share could not afford at least one type of care?",
+      "chartKind": "donut",
+      "variables": [
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "The donut partitions valid respondents into two groups: those with at least one affordability barrier and those with none across the three care types.",
+      "featured": true
+    },
+    {
+      "id": "afford-total-spend",
+      "section": "affordability",
+      "title": "Among people who could not afford care, what is annual total spend distribution?",
+      "chartKind": "histogram",
+      "variables": [
+        "TOTEXP23",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Bars show the weighted distribution of annual total spending for the could-not-afford cohort. The median and upper tail reveal how concentrated spending is inside this group.",
+      "featured": true
+    },
+    {
+      "id": "afford-oop-spend",
+      "section": "affordability",
+      "title": "Among people who could not afford care, what is annual out-of-pocket distribution?",
+      "chartKind": "histogram",
+      "variables": [
+        "TOTSLF23",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "This histogram isolates annual out-of-pocket spending for the could-not-afford cohort, so high bars in the upper ranges indicate heavier direct financial burden.",
+      "featured": true
+    },
+    {
+      "id": "afford-sicker-or-skipping",
+      "section": "affordability",
+      "title": "Are \u201ccould not afford\u201d people spending less because they skip care, or more because they are sicker?",
+      "chartKind": "boxplot",
+      "variables": [
+        "TOTEXP23",
+        "TOTSLF23",
+        "OBTOTV23",
+        "ERTOT23",
+        "IPDIS23",
+        "RXTOT23",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Use the metric selector to compare distributions for the affordability cohort versus everyone else. Wider boxes or higher medians suggest systematically heavier burden on that metric."
+    },
+    {
+      "id": "afford-insurance",
+      "section": "affordability",
+      "title": "Does inability to afford care correlate with being uninsured, public, or private?",
+      "chartKind": "stackedBar",
+      "variables": [
+        "INSCOV23",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Each column is one insurance category. The stacked segments show the weighted share with at least one affordability problem versus none.",
+      "featured": true
+    },
+    {
+      "id": "afford-poverty",
+      "section": "affordability",
+      "title": "Does inability to afford care vary by poverty category?",
+      "chartKind": "stackedBar",
+      "variables": [
+        "POVCAT23",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Read each 100% stacked bar within a poverty band. Taller affordability segments indicate where cost barriers are more common inside that group.",
+      "featured": true
+    },
+    {
+      "id": "afford-income-quintile",
+      "section": "affordability",
+      "title": "How do affordability barriers change across the family income distribution?",
+      "chartKind": "orderedBar",
+      "variables": [
+        "FAMINC23",
+        "family_income_quintile",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Bars show the weighted affordability-barrier rate by fixed family-income quintile. Read left to right as a distributional gradient from lower-income to higher-income households."
+    },
+    {
+      "id": "afford-education",
+      "section": "affordability",
+      "title": "How do affordability barriers shift across education levels?",
+      "chartKind": "orderedBar",
+      "variables": [
+        "EDUCYR",
+        "education_band",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Each bar is the weighted affordability-barrier rate for an adult education band, ordered from less than high school through graduate study to show the education gradient directly.",
+      "featured": true
+    },
+    {
+      "id": "afford-race",
+      "section": "affordability",
+      "title": "How do affordability barriers vary across broad race groups?",
+      "chartKind": "orderedBar",
+      "variables": [
+        "RACETHX",
+        "racethx_label",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Each bar shows the weighted share of a broad race group reporting at least one affordability barrier. Treat this as a descriptive fairness comparison, not a causal explanation.",
+      "featured": true
+    },
+    {
+      "id": "afford-employment",
+      "section": "affordability",
+      "title": "Does inability to afford care vary by employment status?",
+      "chartKind": "orderedBar",
+      "variables": [
+        "EMPST53",
+        "employment_band",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Bars compare weighted affordability-problem rates across adult employment status groups derived from the round 5/3 employment status code."
+    },
+    {
+      "id": "afford-age",
+      "section": "affordability",
+      "title": "Does inability to afford care vary by age group?",
+      "chartKind": "line",
+      "variables": [
+        "AGELAST",
+        "age_band",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "The line traces the weighted rate of affordability problems by age band, making it easy to spot where the burden rises or falls across the life course."
+    },
+    {
+      "id": "afford-region",
+      "section": "affordability",
+      "title": "Does inability to afford care vary by region?",
+      "chartKind": "bar",
+      "variables": [
+        "REGION23",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Each regional bar shows the weighted affordability-problem rate for that Census region; state coverage for each region appears in tooltips."
+    },
+    {
+      "id": "afford-er",
+      "section": "affordability",
+      "title": "What is ER usage among those who could not afford routine care?",
+      "chartKind": "boxplot",
+      "variables": [
+        "ERTOT23",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "The box plots compare annual ER visit counts for the affordability cohort and the cohort without reported affordability problems."
+    },
+    {
+      "id": "delay-med",
+      "section": "delay",
+      "title": "How many delayed medical care due to cost?",
+      "chartKind": "bar",
+      "variables": [
+        "DLAYCA42",
+        "PERWT23F"
+      ],
+      "howToRead": "The Yes bar estimates people who postponed medical care because of cost; the No bar is the valid remainder."
+    },
+    {
+      "id": "delay-dental",
+      "section": "delay",
+      "title": "How many delayed dental care due to cost?",
+      "chartKind": "bar",
+      "variables": [
+        "DLAYDN42",
+        "PERWT23F"
+      ],
+      "howToRead": "Use the two weighted bars to compare how many people delayed dental care because of cost versus those who did not."
+    },
+    {
+      "id": "delay-rx",
+      "section": "delay",
+      "title": "How many delayed prescribed medicine due to cost?",
+      "chartKind": "bar",
+      "variables": [
+        "DLAYPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "This bar chart focuses only on delays in getting prescribed medicine because of cost."
+    },
+    {
+      "id": "delay-any",
+      "section": "delay",
+      "title": "What share delayed at least one type due to cost?",
+      "chartKind": "donut",
+      "variables": [
+        "DLAYCA42",
+        "DLAYDN42",
+        "DLAYPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "The donut splits valid respondents into those who delayed at least one care type due to cost and those who did not report any delay."
+    },
+    {
+      "id": "delay-race",
+      "section": "delay",
+      "title": "How do delayed-care rates vary across broad race groups?",
+      "chartKind": "orderedBar",
+      "variables": [
+        "RACETHX",
+        "racethx_label",
+        "DLAYCA42",
+        "DLAYDN42",
+        "DLAYPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Bars show the weighted delayed-due-to-cost rate within each broad race group. Compare the height of the bars as a descriptive access pattern, not a causal claim."
+    },
+    {
+      "id": "delay-er",
+      "section": "delay",
+      "title": "Is delayed care associated with higher emergency room use later?",
+      "chartKind": "boxplot",
+      "variables": [
+        "ERTOT23",
+        "DLAYCA42",
+        "DLAYDN42",
+        "DLAYPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Compare the ER visit distributions for people with any delayed care versus those with no reported delay due to cost."
+    },
+    {
+      "id": "delay-ipdis",
+      "section": "delay",
+      "title": "Is delayed care associated with higher inpatient discharge counts?",
+      "chartKind": "boxplot",
+      "variables": [
+        "IPDIS23",
+        "DLAYCA42",
+        "DLAYDN42",
+        "DLAYPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "These box plots compare inpatient discharge counts between people with and without delayed care due to cost."
+    },
+    {
+      "id": "delay-oop",
+      "section": "delay",
+      "title": "Is delayed care associated with higher out-of-pocket burden?",
+      "chartKind": "boxplot",
+      "variables": [
+        "TOTSLF23",
+        "DLAYCA42",
+        "DLAYDN42",
+        "DLAYPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Read the boxes as weighted spending distributions. Higher medians or longer upper tails indicate greater out-of-pocket burden among people who delayed care."
+    },
+    {
+      "id": "usc-reasons",
+      "section": "no_usc",
+      "title": "Among people without a usual source of care, what is the main reason?",
+      "chartKind": "rankedBar",
+      "variables": [
+        "HAVEUS42",
+        "YNOUSC42_M18",
+        "PERWT23F"
+      ],
+      "howToRead": "Bars are ranked from the most common to the least common reported reason among people without a usual source of care.",
+      "featured": true
+    },
+    {
+      "id": "usc-cost-share",
+      "section": "no_usc",
+      "title": "What fraction reports \u201ccost of medical care\u201d as the reason for no usual source of care?",
+      "chartKind": "donut",
+      "variables": [
+        "HAVEUS42",
+        "YNOUSC42_M18",
+        "PERWT23F"
+      ],
+      "howToRead": "The donut narrows to the no-USC population only, then splits it between the specific cost-of-medical-care reason and every other reason."
+    },
+    {
+      "id": "usc-cost-insurance",
+      "section": "no_usc",
+      "title": "For the \u201ccost reason\u201d subgroup, what is the insurance mix?",
+      "chartKind": "stackedBar",
+      "variables": [
+        "HAVEUS42",
+        "YNOUSC42_M18",
+        "INSCOV23",
+        "PERWT23F"
+      ],
+      "howToRead": "This stacked bar isolates the cost-reason subgroup and shows how it is divided across private, public-only, and uninsured coverage categories."
+    },
+    {
+      "id": "usc-cost-income",
+      "section": "no_usc",
+      "title": "For the \u201ccost reason\u201d subgroup, what are income and poverty levels?",
+      "chartKind": "dualBar",
+      "variables": [
+        "HAVEUS42",
+        "YNOUSC42_M18",
+        "POVCAT23",
+        "family_income_quintile",
+        "PERWT23F"
+      ],
+      "howToRead": "The left panel shows poverty categories and the right panel shows fixed family-income quintiles for the cost-reason subgroup."
+    },
+    {
+      "id": "usc-cost-burden",
+      "section": "no_usc",
+      "title": "For the \u201ccost reason\u201d subgroup, what is their annual spend and out-of-pocket burden?",
+      "chartKind": "dualBoxplot",
+      "variables": [
+        "HAVEUS42",
+        "YNOUSC42_M18",
+        "TOTEXP23",
+        "TOTSLF23",
+        "PERWT23F"
+      ],
+      "howToRead": "The two box plots show annual total spend and out-of-pocket spend for the cost-reason subgroup, so you can compare overall spending versus direct financial burden."
+    },
+    {
+      "id": "can-afford-education-spend",
+      "section": "can_afford",
+      "title": "Within the can-afford cohort, how does education shape the spending profile?",
+      "chartKind": "boxplot",
+      "variables": [
+        "can_afford_all",
+        "education_band",
+        "TOTEXP23",
+        "PERWT23F"
+      ],
+      "howToRead": "Each box compares annual total spending inside the can-afford cohort across adult education bands, showing whether lower reported barriers still coexist with different spending profiles."
+    },
+    {
+      "id": "can-afford-income-spend",
+      "section": "can_afford",
+      "title": "Within the can-afford cohort, how does income shape the spending profile?",
+      "chartKind": "boxplot",
+      "variables": [
+        "can_afford_all",
+        "POVCAT23",
+        "family_income_quintile",
+        "TOTEXP23",
+        "PERWT23F"
+      ],
+      "howToRead": "The boxes compare annual total spending inside the can-afford cohort across income groups, letting you see whether lower reported barriers still mask different levels of healthcare use or cost."
+    },
+    {
+      "id": "race-total-spend",
+      "section": "can_afford",
+      "title": "Across broad race groups, how does annual total spend differ?",
+      "chartKind": "boxplot",
+      "variables": [
+        "RACETHX",
+        "racethx_label",
+        "TOTEXP23",
+        "PERWT23F"
+      ],
+      "howToRead": "Each box shows the annual total-spend distribution for one broad race group. Read differences as descriptive burden patterns within the filtered cohort, not as proof of a race effect."
+    },
+    {
+      "id": "race-oop-burden",
+      "section": "can_afford",
+      "title": "Across broad race groups, how does annual out-of-pocket burden differ?",
+      "chartKind": "boxplot",
+      "variables": [
+        "RACETHX",
+        "racethx_label",
+        "TOTSLF23",
+        "PERWT23F"
+      ],
+      "howToRead": "Each box shows annual out-of-pocket spending for one broad race group, so larger medians or upper tails indicate heavier direct financial burden within that group."
+    },
+    {
+      "id": "income-oop-share",
+      "section": "can_afford",
+      "title": "How does out-of-pocket share change across income quintiles?",
+      "chartKind": "boxplot",
+      "variables": [
+        "family_income_quintile",
+        "oop_share",
+        "PERWT23F"
+      ],
+      "howToRead": "Each box shows the out-of-pocket share distribution within an income quintile. Lower medians indicate a smaller direct payment share even when people are already using care."
+    },
+    {
+      "id": "education-delay-rate",
+      "section": "can_afford",
+      "title": "How do delayed-due-to-cost rates shift across education levels?",
+      "chartKind": "orderedBar",
+      "variables": [
+        "education_band",
+        "delay_any",
+        "PERWT23F"
+      ],
+      "howToRead": "Bars show delayed-due-to-cost rates by education band for adults, so you can track whether delay rates fall as educational attainment rises."
+    },
+    {
+      "id": "income-afford-rate",
+      "section": "can_afford",
+      "title": "How do affordability barriers fall as income rises?",
+      "chartKind": "orderedBar",
+      "variables": [
+        "POVCAT23",
+        "afford_any",
+        "PERWT23F"
+      ],
+      "howToRead": "Read the bars from lower to higher poverty categories to see how affordability barriers taper, persist, or flatten across the income ladder."
+    },
+    {
+      "id": "low-risk-proxy",
+      "section": "low_risk",
+      "title": "What fraction of population is low-risk by utilization proxy?",
+      "chartKind": "bar",
+      "variables": [
+        "LOW_RISK",
+        "PERWT23F"
+      ],
+      "howToRead": "The bars compare the weighted population share classified as low risk versus not low risk using the existing precomputed low-risk cohort."
+    },
+    {
+      "id": "low-risk-spend",
+      "section": "low_risk",
+      "title": "What is average annual spend for low-risk vs non-low-risk?",
+      "chartKind": "boxplot",
+      "variables": [
+        "LOW_RISK",
+        "TOTEXP23",
+        "PERWT23F"
+      ],
+      "howToRead": "Each box captures the annual total-spending distribution for one low-risk class; the comparison shows how separated the two cost profiles are."
+    },
+    {
+      "id": "low-risk-oop",
+      "section": "low_risk",
+      "title": "What is average out-of-pocket for low-risk vs non-low-risk?",
+      "chartKind": "boxplot",
+      "variables": [
+        "LOW_RISK",
+        "TOTSLF23",
+        "PERWT23F"
+      ],
+      "howToRead": "Use the boxes to compare direct out-of-pocket burden for low-risk versus non-low-risk people."
+    },
+    {
+      "id": "low-risk-uninsured",
+      "section": "low_risk",
+      "title": "How many uninsured people are low-risk?",
+      "chartKind": "stackedBar",
+      "variables": [
+        "UNINS23",
+        "LOW_RISK",
+        "PERWT23F"
+      ],
+      "howToRead": "This chart splits the uninsured-status columns into low-risk and not-low-risk segments so you can size the acquisition opportunity."
+    },
+    {
+      "id": "low-risk-targetable",
+      "section": "low_risk",
+      "title": "If low-risk people had lower pricing, how many would be targetable?",
+      "chartKind": "funnel",
+      "variables": [
+        "LOW_RISK",
+        "UNINS23",
+        "PERWT23F"
+      ],
+      "howToRead": "The funnel starts with the full filtered population, then narrows to low-risk people and finally to the uninsured low-risk segment as a conservative targetable cohort."
+    },
+    {
+      "id": "low-risk-payer-mix",
+      "section": "low_risk",
+      "title": "What is payer mix for the low-risk cohort?",
+      "chartKind": "stackedBar",
+      "variables": [
+        "LOW_RISK",
+        "TOTPRV23",
+        "TOTMCR23",
+        "TOTMCD23",
+        "TOTSLF23",
+        "PERWT23F"
+      ],
+      "howToRead": "The stacked bar divides average spending for the low-risk cohort into private, Medicare, Medicaid, and out-of-pocket components."
+    },
+    {
+      "id": "low-risk-race",
+      "section": "low_risk",
+      "title": "How does low-risk share vary across broad race groups?",
+      "chartKind": "orderedBar",
+      "variables": [
+        "RACETHX",
+        "racethx_label",
+        "LOW_RISK",
+        "PERWT23F"
+      ],
+      "howToRead": "Bars show the weighted share classified as low risk within each broad race group. This is a descriptive subgroup comparison to test fairness and acquisition assumptions, not a causal argument."
+    },
+    {
+      "id": "low-risk-covered-lives",
+      "section": "low_risk",
+      "title": "Would focusing only on low-risk uninsured meaningfully expand covered lives?",
+      "chartKind": "bar",
+      "variables": [
+        "LOW_RISK",
+        "UNINS23",
+        "PERWT23F"
+      ],
+      "howToRead": "The bars compare three scenario sizes: the entire filtered population, all uninsured people, and the narrower uninsured low-risk group."
+    },
+    {
+      "id": "student-affordability",
+      "section": "student",
+      "title": "For ages 17\u201323, what is affordability profile by student status?",
+      "chartKind": "stackedBar",
+      "variables": [
+        "FTSTU23X",
+        "AFRDCA42",
+        "AFRDDN42",
+        "AFRDPM42",
+        "PERWT23F"
+      ],
+      "howToRead": "Within ages 17-23 only, each student-status bar is split into the share with at least one affordability barrier versus none.",
+      "featured": true
+    },
+    {
+      "id": "student-spend",
+      "section": "student",
+      "title": "For full-time students, what is annual spend and out-of-pocket distribution?",
+      "chartKind": "dualBoxplot",
+      "variables": [
+        "FTSTU23X",
+        "TOTEXP23",
+        "TOTSLF23",
+        "PERWT23F"
+      ],
+      "howToRead": "The two box plots summarize total annual spending and out-of-pocket spending for full-time students ages 17-23."
+    },
+    {
+      "id": "student-insurance",
+      "section": "student",
+      "title": "For full-time students, what is insurance status distribution?",
+      "chartKind": "bar",
+      "variables": [
+        "FTSTU23X",
+        "INSCOV23",
+        "PERWT23F"
+      ],
+      "howToRead": "This weighted bar chart shows how full-time students split across private, public-only, and uninsured coverage."
+    },
+    {
+      "id": "student-delay",
+      "section": "student",
+      "title": "For full-time students, what share delayed care due to cost?",
+      "chartKind": "bar",
+      "variables": [
+        "FTSTU23X",
+        "delay_any",
+        "PERWT23F"
+      ],
+      "howToRead": "The bars isolate full-time students and show the weighted share that delayed at least one care type due to cost."
+    },
+    {
+      "id": "student-low-risk-signals",
+      "section": "student",
+      "title": "Are student low-risk signals stronger than non-students in the same age band?",
+      "chartKind": "boxplot",
+      "variables": [
+        "FTSTU23X",
+        "LOW_RISK",
+        "CHRONIC_CT",
+        "LIMIT_CT",
+        "NONACUTE_UTIL_CT",
+        "PERWT23F"
+      ],
+      "howToRead": "Use the metric selector to compare low-risk signals for full-time students versus non-students ages 17-23."
+    }
+  ],
+  "overview": {
+    "heroMetricIds": [
+      "afford-med",
+      "afford-dental",
+      "afford-rx",
+      "delay-med",
+      "delay-dental",
+      "delay-rx"
+    ],
+    "highlightQuestionIds": [
+      "afford-any",
+      "afford-total-spend",
+      "afford-oop-spend",
+      "afford-insurance",
+      "afford-income-quintile",
+      "afford-education",
+      "afford-race",
+      "usc-reasons",
+      "student-affordability"
+    ]
+  },
+  "assumptions": [
+    "Default reporting is weighted with Person weight.",
+    "Could-not-afford cohort equals any of Afford medical, Afford dental, or Afford meds coded Yes.",
+    "Delayed-due-to-cost cohort equals any of Delay medical, Delay dental, or Delay meds coded Yes.",
+    "Can-afford cohort equals No across Afford medical, Afford dental, and Afford meds; mixed valid-and-missing patterns remain unknown for composite cards.",
+    "Broad race comparisons use Race group exactly as labeled in the MEPS documentation.",
+    "This site frames low-risk and affordability findings as fairness and acquisition exploration, not causal proof."
+  ],
+  "proxyNotes": {
+    "no_usc": "The no-USC section is a proxy analysis. No-USC reason describes the main reason for not having a usual source of care, not a direct insurance purchase reason.",
+    "low_risk": "Low risk is taken from the existing processed low-risk export and used as the primary low-risk cohort for scenario sizing.",
+    "fairness": "Income, education, and Race group comparisons are descriptive subgroup views from survey data. They help surface fairness and access patterns, but they do not identify a single causal mechanism."
+  },
+  "validation": [
+    {
+      "name": "row_count",
+      "value": 18919,
+      "detail": "Joined row count after merging raw and low-risk data."
+    },
+    {
+      "name": "weighted_share_afford_med",
+      "value": 0.03242,
+      "detail": "Weighted share answering Yes to AFRDCA42 among valid responses."
+    },
+    {
+      "name": "weighted_share_delay_med",
+      "value": 0.059084,
+      "detail": "Weighted share answering Yes to DLAYCA42 among valid responses."
+    },
+    {
+      "name": "inscov23_breakdown",
+      "value": {
+        "Any private": 0.645417,
+        "Public only": 0.291214,
+        "Uninsured": 0.063369
+      },
+      "detail": "Weighted insurance breakdown across valid INSCOV23 responses."
+    },
+    {
+      "name": "cost_reason_share_among_no_usc",
+      "value": 0.021523,
+      "detail": "Weighted share of the no-USC population citing cost of medical care as the reason."
+    },
+    {
+      "name": "racethx_unweighted_counts",
+      "value": {
+        "Hispanic": 4188,
+        "Non-Hispanic White only": 10338,
+        "Non-Hispanic Black only": 2520,
+        "Non-Hispanic Asian only": 1150,
+        "Non-Hispanic Other race or multi-race": 723
+      },
+      "detail": "Unweighted row counts for the five broad RACETHX groups."
+    },
+    {
+      "name": "racethx_weighted_share",
+      "value": {
+        "Hispanic": 0.196571,
+        "Non-Hispanic White only": 0.573653,
+        "Non-Hispanic Black only": 0.125194,
+        "Non-Hispanic Asian only": 0.063925,
+        "Non-Hispanic Other race or multi-race": 0.040657
+      },
+      "detail": "Weighted population share across the five broad RACETHX groups."
+    }
+  ]
+}
