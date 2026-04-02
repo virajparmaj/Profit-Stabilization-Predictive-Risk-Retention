@@ -5,3 +5,5 @@ site/node_modules
 site/dist
 data_processed
 notebooks/models
+interview_eda.md
+interview_modelling.md
