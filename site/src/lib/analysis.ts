@@ -154,6 +154,7 @@ export function histogramBins(
   field: string,
   weightMode: WeightMode,
   binCount = 10,
+  customBins?: Array<{ label: string; low: number; high: number }>,
 ): Array<{ label: string; low: number; high: number; total: number }> {
   const values = rows
     .map((row) => ({
@@ -167,6 +168,23 @@ export function histogramBins(
 
   if (values.length === 0) {
     return [];
+  }
+
+  if (customBins && customBins.length > 0) {
+    const bins = customBins.map((bin) => ({ ...bin, total: 0 }));
+    for (const item of values) {
+      const value = item.value;
+      const match = bins.find((bin) => value >= bin.low && value < bin.high);
+      if (match) {
+        match.total += item.weight;
+      } else if (Number.isFinite(value)) {
+        const last = bins[bins.length - 1];
+        if (value >= last.low && last.high === Number.POSITIVE_INFINITY) {
+          last.total += item.weight;
+        }
+      }
+    }
+    return bins;
   }
 
   const max = Math.max(...values.map((item) => item.value));

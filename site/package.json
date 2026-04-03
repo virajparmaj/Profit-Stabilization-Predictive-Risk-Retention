@@ -3,10 +3,14 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "dev": "vite",
     "build:data": "python3 ../scripts/build_affordability_data.py",
-    "build": "npm run build:data && vite build",
+    "build": "vite build",
+    "build:full": "npm run build:data && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

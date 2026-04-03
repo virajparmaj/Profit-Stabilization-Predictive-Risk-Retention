@@ -2,6 +2,8 @@ import Papa from "papaparse";
 
 import type { Metadata, SitePersonRow } from "../types";
 
+const dataUrl = (fileName: string) => `${import.meta.env.BASE_URL}data/${fileName}`;
+
 const NUMERIC_FIELDS = new Set([
   "perwt23f",
   "agelast",
@@ -45,7 +47,7 @@ function parseValue(key: string, value: string): string | number | null {
 }
 
 export async function loadMetadata(): Promise<Metadata> {
-  const response = await fetch("/data/metadata.json");
+  const response = await fetch(dataUrl("metadata.json"));
   if (!response.ok) {
     throw new Error(`Failed to load metadata.json: ${response.status}`);
   }
@@ -53,7 +55,7 @@ export async function loadMetadata(): Promise<Metadata> {
 }
 
 export async function loadRows(): Promise<SitePersonRow[]> {
-  const response = await fetch("/data/people.csv");
+  const response = await fetch(dataUrl("people.csv"));
   if (!response.ok) {
     throw new Error(`Failed to load people.csv: ${response.status}`);
   }

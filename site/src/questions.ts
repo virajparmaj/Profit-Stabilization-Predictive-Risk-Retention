@@ -100,6 +100,7 @@ function barOption(params: {
   yAxisLabel?: string;
   valueFormatter?: (value: unknown) => string;
 }): EChartsOption {
+  const shouldRotate = params.categories.some((category) => category.length > 14);
   return {
     animationDuration: 400,
     grid: { left: 58, right: 18, top: 20, bottom: 48, containLabel: true },
@@ -112,7 +113,13 @@ function barOption(params: {
     xAxis: {
       type: "category",
       data: params.categories,
-      axisLabel: { color: COLORS.ink, interval: 0, rotate: params.categories.length > 6 ? 20 : 0 },
+      axisLabel: {
+        color: COLORS.ink,
+        interval: 0,
+        rotate: shouldRotate ? 26 : 0,
+        overflow: "truncate",
+        width: shouldRotate ? 100 : 80,
+      },
       axisTick: { show: false },
       axisLine: { lineStyle: { color: COLORS.fog } },
     },
@@ -149,6 +156,7 @@ function stackedOption(params: {
   yesLabel: string;
   noLabel: string;
 }): EChartsOption {
+  const shouldRotate = params.categories.some((category) => category.length > 14);
   return {
     animationDuration: 400,
     grid: { left: 52, right: 18, top: 16, bottom: 54, containLabel: true },
@@ -167,7 +175,13 @@ function stackedOption(params: {
     xAxis: {
       type: "category",
       data: params.categories,
-      axisLabel: { color: COLORS.ink, interval: 0, rotate: params.categories.length > 5 ? 18 : 0 },
+      axisLabel: {
+        color: COLORS.ink,
+        interval: 0,
+        rotate: shouldRotate ? 26 : 0,
+        overflow: "truncate",
+        width: shouldRotate ? 100 : 80,
+      },
       axisTick: { show: false },
     },
     yAxis: {
@@ -269,8 +283,11 @@ function boxOption(params: {
   categories: string[];
   values: Array<[number, number, number, number, number]>;
   metricField: string;
+  yAxisMax?: number;
+  yAxisMin?: number;
 }): EChartsOption {
   const formatter = METRIC_LABELS[params.metricField]?.formatter ?? formatNumber;
+  const shouldRotate = params.categories.some((category) => category.length > 14);
   return {
     animationDuration: 400,
     grid: { left: 58, right: 18, top: 20, bottom: 52, containLabel: true },
@@ -292,11 +309,19 @@ function boxOption(params: {
     xAxis: {
       type: "category",
       data: params.categories,
-      axisLabel: { color: COLORS.ink, interval: 0, rotate: params.categories.length > 4 ? 16 : 0 },
+      axisLabel: {
+        color: COLORS.ink,
+        interval: 0,
+        rotate: shouldRotate ? 26 : 0,
+        overflow: "truncate",
+        width: shouldRotate ? 100 : 80,
+      },
       axisTick: { show: false },
     },
     yAxis: {
       type: "value",
+      min: params.yAxisMin ?? 0,
+      max: params.yAxisMax,
       axisLabel: { color: COLORS.muted, formatter: (value: number) => formatter(value) },
       splitLine: { lineStyle: { color: "#ebdfd4" } },
     },
@@ -501,12 +526,39 @@ function buildCompositeDonutQuestion(id: string, field: string, yesLabel: string
 }
 
 function buildHistogramQuestion(id: string, metricField: string, subset: (row: SitePersonRow) => boolean): QuestionSpec {
+  const customSpendBins =
+    metricField === "totexp23"
+      ? [
+          { label: "0-1k", low: 0, high: 1_000 },
+          { label: "1-5k", low: 1_000, high: 5_000 },
+          { label: "5-7.5k", low: 5_000, high: 7_500 },
+          { label: "7.5-10k", low: 7_500, high: 10_000 },
+          { label: "10-20k", low: 10_000, high: 20_000 },
+          { label: "20-50k", low: 20_000, high: 50_000 },
+          { label: "50-100k", low: 50_000, high: 100_000 },
+          { label: "100-200k", low: 100_000, high: 200_000 },
+          { label: "200k+", low: 200_000, high: Number.POSITIVE_INFINITY },
+        ]
+      : metricField === "totslf23"
+        ? [
+            { label: "0-0.5k", low: 0, high: 500 },
+            { label: "0.5-1k", low: 500, high: 1_000 },
+            { label: "1-2k", low: 1_000, high: 2_000 },
+            { label: "2-3.5k", low: 2_000, high: 3_500 },
+            { label: "3.5-4k", low: 3_500, high: 4_000 },
+            { label: "4-5k", low: 4_000, high: 5_000 },
+            { label: "5-7.5k", low: 5_000, high: 7_500 },
+            { label: "7.5-12.5k", low: 7_500, high: 12_500 },
+            { label: "12.5-20k", low: 12_500, high: 20_000 },
+            { label: "20k+", low: 20_000, high: Number.POSITIVE_INFINITY },
+          ]
+        : undefined;
   return {
     id,
     build: ({ rows, filters }) => {
       const subsetRows = rows.filter(subset);
       const valid = subsetRows.filter((row) => numberValue(row, metricField) !== null);
-      const bins = histogramBins(valid, metricField, filters.weightMode, 10);
+      const bins = histogramBins(valid, metricField, filters.weightMode, 10, customSpendBins);
       const values = bins.map((bin) => bin.total);
       const median = weightedQuantile(valid, metricField, 0.5, filters.weightMode);
       const p75 = weightedQuantile(valid, metricField, 0.75, filters.weightMode);
@@ -566,15 +618,19 @@ function buildMetricComparisonQuestion(id: string, cohortField: string): Questio
       }
       const withMedian = weightedQuantile(withFlag, mode, 0.5, filters.weightMode) ?? 0;
       const withoutMedian = weightedQuantile(withoutFlag, mode, 0.5, filters.weightMode) ?? 0;
+      const capValue = weightedQuantile(valid, mode, 0.95, filters.weightMode);
+      const yAxisMax = capValue !== null && capValue > 0 ? capValue : undefined;
       return {
         option: boxOption({
           categories: ["Affordability barrier", "No affordability barrier"],
           values: [withBox, withoutBox],
           metricField: mode,
+          yAxisMax,
         }),
         inference: `For ${metric.label.toLowerCase()}, the weighted median is ${metric.formatter(withMedian)} for people with an affordability barrier versus ${metric.formatter(withoutMedian)} for those without one.`,
         excludedCount: rows.length - valid.length,
         validCount: valid.length,
+        note: yAxisMax ? "Axis capped at the 95th percentile to keep the distribution readable." : undefined,
       };
     },
   };
@@ -822,16 +878,20 @@ function buildBinaryCohortBoxQuestion(
       }
       const firstMedian = weightedQuantile(first, metricField, 0.5, filters.weightMode) ?? 0;
       const secondMedian = weightedQuantile(second, metricField, 0.5, filters.weightMode) ?? 0;
+      const capValue = weightedQuantile(valid, metricField, 0.95, filters.weightMode);
+      const yAxisMax = capValue !== null && capValue > 0 ? capValue : undefined;
       const metric = METRIC_LABELS[metricField];
       return {
         option: boxOption({
           categories: labels,
           values: [firstBox, secondBox],
           metricField,
+          yAxisMax,
         }),
         inference: `The weighted median ${metric.label.toLowerCase()} is ${metric.formatter(firstMedian)} for ${labels[0].toLowerCase()} versus ${metric.formatter(secondMedian)} for ${labels[1].toLowerCase()}.`,
         excludedCount: rows.length - valid.length,
         validCount: valid.length,
+        note: yAxisMax ? "Axis capped at the 95th percentile to keep the distribution readable." : undefined,
       };
     },
   };
@@ -1091,14 +1151,17 @@ function buildCanAffordEducationSpend(): QuestionSpec {
           filters.weightMode,
         ) ?? 0,
       );
+      const capValue = weightedQuantile(valid, "totexp23", 0.95, filters.weightMode);
+      const yAxisMax = capValue !== null && capValue > 0 ? capValue : undefined;
       return {
-        option: boxOption({ categories, values: boxes, metricField: "totexp23" }),
+        option: boxOption({ categories, values: boxes, metricField: "totexp23", yAxisMax }),
         inference:
           categories.length === 0
             ? "No adult can-afford cohort remains after filtering."
             : `${categories[medians.indexOf(Math.max(...medians))]} shows the highest weighted median annual total spend inside the can-afford cohort. Even among people reporting no direct affordability barrier, spending still differs across education bands.`,
         excludedCount: rows.length - valid.length,
         validCount: valid.length,
+        note: yAxisMax ? "Axis capped at the 95th percentile to keep the distribution readable." : undefined,
       };
     },
   };
@@ -1492,9 +1555,6 @@ function buildStudentLowRiskSignals(): QuestionSpec {
 }
 
 export const QUESTION_SPECS: QuestionSpec[] = [
-  buildBinaryBarQuestion("afford-med", "afrdca42"),
-  buildBinaryBarQuestion("afford-dental", "afrddn42"),
-  buildBinaryBarQuestion("afford-rx", "afrdpm42"),
   buildCompositeDonutQuestion(
     "afford-any",
     "afford_any",
@@ -1536,12 +1596,6 @@ export const QUESTION_SPECS: QuestionSpec[] = [
   ),
   buildAgeLineQuestion("afford-age"),
   buildAffordRegionQuestion(),
-  buildBinaryCohortBoxQuestion(
-    "afford-er",
-    "ertot23",
-    "afford_any",
-    ["Affordability barrier", "No affordability barrier"],
-  ),
   buildBinaryBarQuestion("delay-med", "dlayca42"),
   buildBinaryBarQuestion("delay-dental", "dlaydn42"),
   buildBinaryBarQuestion("delay-rx", "dlaypm42"),
@@ -1558,23 +1612,10 @@ export const QUESTION_SPECS: QuestionSpec[] = [
     RACE_ORDER,
     "racethx_label",
   ),
-  buildBinaryCohortBoxQuestion("delay-er", "ertot23", "delay_any", ["Delayed care", "No delay"]),
-  buildBinaryCohortBoxQuestion(
-    "delay-ipdis",
-    "ipdis23",
-    "delay_any",
-    ["Delayed care", "No delay"],
-  ),
-  buildBinaryCohortBoxQuestion("delay-oop", "totslf23", "delay_any", ["Delayed care", "No delay"]),
   buildReasonRankedQuestion(),
   buildUscCostShareQuestion(),
   buildUscCostInsuranceQuestion(),
   buildUscCostIncomeQuestion(),
-  buildDualBoxQuestion(
-    "usc-cost-burden",
-    (row) => stringValue(row, "haveus42") === "2" && stringValue(row, "ynousc42_m18") === "9",
-    ["Annual total spend", "Annual out-of-pocket spend"],
-  ),
   buildCanAffordEducationSpend(),
   buildCanAffordIncomeSpend(),
   buildGroupedBoxByCategoryQuestion({

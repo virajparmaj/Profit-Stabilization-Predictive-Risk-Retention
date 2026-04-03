@@ -166,15 +166,7 @@ export default function App() {
         <header className="hero-panel">
           <div className="hero-copy">
             <p className="eyebrow">MEPS 2023 Static Explorer</p>
-            <h1>Affordability, delay, and fairness across income, education, and race</h1>
-            <p className="hero-text">
-              This local explorer uses MEPS 2023 to trace affordability barriers,
-              delayed care, access gaps, and low-risk subsidy questions through one
-              shared lens. Every card recomputes its chart, labels, and inference
-              from the active filters so you can test how burden shifts across
-              insurance, income, education, age, region, student status, and broad
-              race groups.
-            </p>
+            <h1>Affordability fairness across insurance & health</h1>
           </div>
           <div className="hero-stats">
             <div>

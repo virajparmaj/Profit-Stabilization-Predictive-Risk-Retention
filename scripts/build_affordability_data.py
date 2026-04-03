@@ -292,10 +292,10 @@ FIELD_LABELS = {
     },
     "RACETHX": {
         "1": "Hispanic",
-        "2": "Non-Hispanic White only",
-        "3": "Non-Hispanic Black only",
-        "4": "Non-Hispanic Asian only",
-        "5": "Non-Hispanic Other race or multi-race",
+        "2": "White",
+        "3": "Black",
+        "4": "Asian",
+        "5": "Other / multi-race",
     },
     "FTSTU23X": {
         "1": "Full-time student",
@@ -409,31 +409,6 @@ SECTION_METADATA = [
 
 QUESTION_METADATA = [
     {
-        "id": "afford-med",
-        "section": "affordability",
-        "title": "How many people could not afford medical care?",
-        "chartKind": "bar",
-        "variables": ["AFRDCA42", "PERWT23F"],
-        "howToRead": "Each bar is a weighted population estimate. The Yes bar represents people who reported they could not afford medical care; the No bar is everyone who answered No among valid responses.",
-        "featured": True,
-    },
-    {
-        "id": "afford-dental",
-        "section": "affordability",
-        "title": "How many people could not afford dental care?",
-        "chartKind": "bar",
-        "variables": ["AFRDDN42", "PERWT23F"],
-        "howToRead": "Compare the weighted Yes and No bars to see how dental affordability pressure differs from the medical-care pattern.",
-    },
-    {
-        "id": "afford-rx",
-        "section": "affordability",
-        "title": "How many people could not afford prescribed medicine?",
-        "chartKind": "bar",
-        "variables": ["AFRDPM42", "PERWT23F"],
-        "howToRead": "The Yes bar estimates people who reported they could not afford prescribed medicines, weighted to the population.",
-    },
-    {
         "id": "afford-any",
         "section": "affordability",
         "title": "What share could not afford at least one type of care?",
@@ -537,14 +512,6 @@ QUESTION_METADATA = [
         "howToRead": "Each regional bar shows the weighted affordability-problem rate for that Census region; state coverage for each region appears in tooltips.",
     },
     {
-        "id": "afford-er",
-        "section": "affordability",
-        "title": "What is ER usage among those who could not afford routine care?",
-        "chartKind": "boxplot",
-        "variables": ["ERTOT23", "AFRDCA42", "AFRDDN42", "AFRDPM42", "PERWT23F"],
-        "howToRead": "The box plots compare annual ER visit counts for the affordability cohort and the cohort without reported affordability problems.",
-    },
-    {
         "id": "delay-med",
         "section": "delay",
         "title": "How many delayed medical care due to cost?",
@@ -585,30 +552,6 @@ QUESTION_METADATA = [
         "howToRead": "Bars show the weighted delayed-due-to-cost rate within each broad race group. Compare the height of the bars as a descriptive access pattern, not a causal claim.",
     },
     {
-        "id": "delay-er",
-        "section": "delay",
-        "title": "Is delayed care associated with higher emergency room use later?",
-        "chartKind": "boxplot",
-        "variables": ["ERTOT23", "DLAYCA42", "DLAYDN42", "DLAYPM42", "PERWT23F"],
-        "howToRead": "Compare the ER visit distributions for people with any delayed care versus those with no reported delay due to cost.",
-    },
-    {
-        "id": "delay-ipdis",
-        "section": "delay",
-        "title": "Is delayed care associated with higher inpatient discharge counts?",
-        "chartKind": "boxplot",
-        "variables": ["IPDIS23", "DLAYCA42", "DLAYDN42", "DLAYPM42", "PERWT23F"],
-        "howToRead": "These box plots compare inpatient discharge counts between people with and without delayed care due to cost.",
-    },
-    {
-        "id": "delay-oop",
-        "section": "delay",
-        "title": "Is delayed care associated with higher out-of-pocket burden?",
-        "chartKind": "boxplot",
-        "variables": ["TOTSLF23", "DLAYCA42", "DLAYDN42", "DLAYPM42", "PERWT23F"],
-        "howToRead": "Read the boxes as weighted spending distributions. Higher medians or longer upper tails indicate greater out-of-pocket burden among people who delayed care.",
-    },
-    {
         "id": "usc-reasons",
         "section": "no_usc",
         "title": "Among people without a usual source of care, what is the main reason?",
@@ -640,14 +583,6 @@ QUESTION_METADATA = [
         "chartKind": "dualBar",
         "variables": ["HAVEUS42", "YNOUSC42_M18", "POVCAT23", "family_income_quintile", "PERWT23F"],
         "howToRead": "The left panel shows poverty categories and the right panel shows fixed family-income quintiles for the cost-reason subgroup.",
-    },
-    {
-        "id": "usc-cost-burden",
-        "section": "no_usc",
-        "title": "For the “cost reason” subgroup, what is their annual spend and out-of-pocket burden?",
-        "chartKind": "dualBoxplot",
-        "variables": ["HAVEUS42", "YNOUSC42_M18", "TOTEXP23", "TOTSLF23", "PERWT23F"],
-        "howToRead": "The two box plots show annual total spend and out-of-pocket spend for the cost-reason subgroup, so you can compare overall spending versus direct financial burden.",
     },
     {
         "id": "can-afford-education-spend",
