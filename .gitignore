@@ -7,3 +7,6 @@ data_processed
 notebooks/models
 interview_eda.md
 interview_modelling.md
+interview/
+notes/
+.claude/
