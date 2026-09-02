@@ -1,0 +1,209 @@
+{
+  "dataset": {
+    "source": "MEPS HC-251 (2023 full-year consolidated)",
+    "rows_raw": 18919,
+    "cols_raw": 1374,
+    "rows_analysed": 18463,
+    "zero_weight_rows_excluded": 456,
+    "represented_population_M": 334.5,
+    "model_ready_file": "data_processed/meps_model_ready_2023.csv"
+  },
+  "bootstrap": {
+    "seed": 20260824,
+    "resamples": 4000,
+    "level_percentiles": [
+      2.5,
+      97.5
+    ]
+  },
+  "i1_concentration": {
+    "mean_usd": 7487.0,
+    "median_usd": 1584.0,
+    "mean_over_median": 4.73,
+    "pct_population_below_mean": 78.9,
+    "mean_percentile_rank": 78.9,
+    "top_1pct_share_of_spend": 20.1,
+    "top_5pct_share_of_spend": 48.7,
+    "top_10pct_share_of_spend": 65.2,
+    "bottom_50pct_share_of_spend": 2.9,
+    "gini": 0.781,
+    "pct_zero_spend": 14.4,
+    "pct_under_500": 31.7,
+    "p90_usd": 18328.0,
+    "p95_usd": 34142.0,
+    "p99_usd": 93466.0,
+    "distribution_axis_cut_usd": 50000,
+    "max_usd": 574675,
+    "pct_zero_ER": 85.8,
+    "pct_zero_IP": 93.6,
+    "inpatient_share_of_top1pct_dollars": 42.8
+  },
+  "i2_selection": {
+    "oof_auc": 0.772,
+    "reported_auc": 0.773,
+    "population": {
+      "n_members": 18463,
+      "median_usd": 1584.0,
+      "mean_usd": 7487.0,
+      "coefficient_of_variation": 2.65,
+      "gini": 0.781,
+      "worst_1pct_share_of_pool_spend": 20.1,
+      "worst_5pct_share_of_pool_spend": 48.7,
+      "pct_members_over_20k": 9.1,
+      "pct_expected_cost_above_20k": 38.6
+    },
+    "selected_top30": {
+      "n_members": 5548,
+      "median_usd": 410.0,
+      "mean_usd": 2779.0,
+      "coefficient_of_variation": 3.6,
+      "gini": 0.827,
+      "worst_1pct_share_of_pool_spend": 26.7,
+      "worst_5pct_share_of_pool_spend": 57.5,
+      "pct_members_over_20k": 2.9,
+      "pct_expected_cost_above_20k": 25.1
+    },
+    "selected_top10": {
+      "n_members": 1891,
+      "median_usd": 154.0,
+      "mean_usd": 2187.0,
+      "coefficient_of_variation": 3.77,
+      "gini": 0.868,
+      "worst_1pct_share_of_pool_spend": 32.6,
+      "worst_5pct_share_of_pool_spend": 64.5,
+      "pct_members_over_20k": 2.3,
+      "pct_expected_cost_above_20k": 27.9
+    }
+  },
+  "i3_functional": {
+    "or_per_extra_chronic_condition": 1.33,
+    "or_per_extra_functional_limitation": 1.394,
+    "or_chronic_ci": [
+      1.289,
+      1.371
+    ],
+    "or_limitation_ci": [
+      1.341,
+      1.45
+    ],
+    "model": "logistic regression, outcome = TOTEXP23 >= 20000, covariates = age/10, female, chronic count, limitation count",
+    "pseudo_r2_chronic_only": 0.151,
+    "pseudo_r2_chronic_plus_limitations": 0.172,
+    "n_model": 18463,
+    "note": "Odds-ratio CIs are analytic (Wald), not bootstrap.",
+    "cell_2chronic_2limits": {
+      "n": 195,
+      "median": 6327,
+      "cat20": 28.7,
+      "ci": [
+        21.0,
+        36.7
+      ]
+    },
+    "cell_6plus_chronic_0limits": {
+      "n": 298,
+      "median": 10938,
+      "cat20": 26.9,
+      "ci": [
+        21.2,
+        32.5
+      ]
+    },
+    "median_gap_pct": -42
+  },
+  "i4_disengaged": {
+    "disengaged_definition": "3 or more of 12 chronic conditions AND zero office-based visits in 2023",
+    "engaged_definition": "3 or more of 12 chronic conditions AND 3 or more office-based visits in 2023",
+    "disengaged": {
+      "n": 545,
+      "pop_millions": 9.2,
+      "median_usd": 377.0,
+      "mean_usd": 6157.0,
+      "mean_over_median": 16.3,
+      "pct_over_20k": 8.4,
+      "acute_share_of_dollars_pct": 53.8,
+      "pct_over_20k_ci": [
+        5.9,
+        11.1
+      ]
+    },
+    "engaged": {
+      "n": 4523,
+      "pop_millions": 64.8,
+      "median_usd": 8692.0,
+      "mean_usd": 19267.0,
+      "mean_over_median": 2.2,
+      "pct_over_20k": 26.0,
+      "acute_share_of_dollars_pct": 23.8
+    }
+  },
+  "i5_label_access": {
+    "p_lowrisk_uninsured": 75.4,
+    "p_lowrisk_insured": 27.7,
+    "p_lowrisk_uninsured_2plus_chronic": {
+      "v": 63.1,
+      "ci": [
+        56.4,
+        69.9
+      ],
+      "n": 284
+    },
+    "p_lowrisk_insured_2plus_chronic": {
+      "v": 12.4,
+      "ci": [
+        11.5,
+        13.3
+      ],
+      "n": 8724
+    },
+    "cohort_clean_pct": 39.3,
+    "cohort_access_only": 37.3,
+    "cohort_clinical_only": 10.6,
+    "cohort_both": 12.8,
+    "cohort_no_usual_source": 40.3,
+    "rest_no_usual_source": 17.8,
+    "cohort_size_weighted_pct": 30.7
+  },
+  "i6_income": {
+    "poor_near_poor": {
+      "n": 2410,
+      "median": 698.0,
+      "routine": 1774.0,
+      "excess": 3923.0,
+      "mean": 5698.0,
+      "cat20": 7.1,
+      "cat20_ci": [
+        6.1,
+        8.3
+      ]
+    },
+    "high_income": {
+      "n": 5224,
+      "median": 1827.0,
+      "routine": 2368.0,
+      "excess": 4559.0,
+      "mean": 6928.0,
+      "cat20": 8.0,
+      "cat20_ci": [
+        7.1,
+        8.8
+      ]
+    },
+    "gap_median_pct": -62.0,
+    "gap_mean_pct": -18.0,
+    "gap_routine_pct": -25.0,
+    "gap_excess_pct": -14.0,
+    "mean_over_median_poor": 8.2,
+    "mean_over_median_high": 3.8
+  },
+  "supporting": {
+    "low_burden_pool_pct_of_pop": 55.7,
+    "low_burden_share_of_all_20k_members": 18.0,
+    "low_burden_share_of_national_spend": 23.5,
+    "low_burden_expected_cost_share_above_5k": 52.3,
+    "panel27_vs_28_median": [
+      1432.0,
+      1685.0
+    ]
+  }
+}
