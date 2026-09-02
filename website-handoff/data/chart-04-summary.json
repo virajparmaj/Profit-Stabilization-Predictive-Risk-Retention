@@ -1,0 +1,26 @@
+{
+  "disengaged_definition": "3 or more of 12 chronic conditions AND zero office-based visits in 2023",
+  "engaged_definition": "3 or more of 12 chronic conditions AND 3 or more office-based visits in 2023",
+  "disengaged": {
+    "n": 545,
+    "pop_millions": 9.2,
+    "median_usd": 377.0,
+    "mean_usd": 6157.0,
+    "mean_over_median": 16.3,
+    "pct_over_20k": 8.4,
+    "acute_share_of_dollars_pct": 53.8,
+    "pct_over_20k_ci": [
+      5.9,
+      11.1
+    ]
+  },
+  "engaged": {
+    "n": 4523,
+    "pop_millions": 64.8,
+    "median_usd": 8692.0,
+    "mean_usd": 19267.0,
+    "mean_over_median": 2.2,
+    "pct_over_20k": 26.0,
+    "acute_share_of_dollars_pct": 23.8
+  }
+}

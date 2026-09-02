@@ -1,0 +1,34 @@
+[
+  {
+    "id": "below-average",
+    "value": "79%",
+    "label": "of members spend below the average",
+    "sub": "The mean sits at the 79th percentile of the spending distribution",
+    "exact": 78.9,
+    "unit": "percent"
+  },
+  {
+    "id": "top5-share",
+    "value": "49%",
+    "label": "of all spending sits with the top 5% of members",
+    "sub": "Gini of annual spend = 0.78",
+    "exact": 48.7,
+    "unit": "percent"
+  },
+  {
+    "id": "tail-in-lowrisk",
+    "value": "25%",
+    "label": "of a model-selected low-risk pool's expected cost is still catastrophic",
+    "sub": "Spending above $20,000, after selecting the 30% scored most low-risk",
+    "exact": 25.1,
+    "unit": "percent"
+  },
+  {
+    "id": "disengaged",
+    "value": "9.2M",
+    "label": "people have 3+ chronic conditions and zero office visits",
+    "sub": "Median spend $377, but 54% of their dollars are ER or inpatient",
+    "exact": 9.2,
+    "unit": "millions_of_people"
+  }
+]

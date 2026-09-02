@@ -1,0 +1,6 @@
+income_band,fpl_range,n_members,median_usd,routine_mean_usd,catastrophic_mean_usd,total_mean_usd,pct_over_20k,pct_over_20k_ci_low,pct_over_20k_ci_high
+Poor/negative,<100% FPL,1880,700.0,1791.0,4139.0,5930.0,7.3,6.0,8.7
+Near poor,100-125% FPL,530,690.0,1723.0,3241.0,4964.0,6.6,4.6,8.8
+Low income,125-200% FPL,1586,697.0,1683.0,2972.0,4655.0,5.5,4.3,6.8
+Middle income,200-400% FPL,3454,1062.0,1949.0,3488.0,5437.0,6.0,5.1,6.8
+High income,400%+ FPL,5224,1827.0,2368.0,4559.0,6928.0,8.0,7.1,8.8

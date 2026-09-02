@@ -1,0 +1,17 @@
+{
+  "or_per_extra_chronic_condition": 1.33,
+  "or_per_extra_functional_limitation": 1.394,
+  "or_chronic_ci": [
+    1.289,
+    1.371
+  ],
+  "or_limitation_ci": [
+    1.341,
+    1.45
+  ],
+  "model": "logistic regression, outcome = TOTEXP23 >= 20000, covariates = age/10, female, chronic count, limitation count",
+  "pseudo_r2_chronic_only": 0.151,
+  "pseudo_r2_chronic_plus_limitations": 0.172,
+  "n_model": 18463,
+  "note": "Odds-ratio CIs are analytic (Wald), not bootstrap."
+}

@@ -1,0 +1,140 @@
+{
+  "method": "percentile bootstrap over records, weighted statistic recomputed per resample",
+  "seed": 20260824,
+  "resamples": 4000,
+  "level_percentiles": [
+    2.5,
+    97.5
+  ],
+  "note": "Canonical source for every confidence interval published in this project. ANALYSIS_REPORT.md, HANDOFF.md and every data file must agree with these bounds.",
+  "intervals": {
+    "burden:0x0:cat20": [
+      1.5,
+      2.6
+    ],
+    "burden:1x0:cat20": [
+      3.0,
+      4.1
+    ],
+    "burden:1x1:cat20": [
+      3.9,
+      17.6
+    ],
+    "burden:1x2+:cat20": [
+      13.0,
+      32.9
+    ],
+    "burden:2x0:cat20": [
+      6.3,
+      8.7
+    ],
+    "burden:2x1:cat20": [
+      6.5,
+      18.1
+    ],
+    "burden:2x2+:cat20": [
+      21.0,
+      36.7
+    ],
+    "burden:3x0:cat20": [
+      8.9,
+      12.5
+    ],
+    "burden:3x1:cat20": [
+      13.2,
+      25.0
+    ],
+    "burden:3x2+:cat20": [
+      24.0,
+      39.2
+    ],
+    "burden:4-5x0:cat20": [
+      14.8,
+      19.4
+    ],
+    "burden:4-5x1:cat20": [
+      17.7,
+      25.7
+    ],
+    "burden:4-5x2+:cat20": [
+      28.6,
+      37.0
+    ],
+    "burden:6+x0:cat20": [
+      21.2,
+      32.5
+    ],
+    "burden:6+x1:cat20": [
+      32.2,
+      44.2
+    ],
+    "burden:6+x2+:cat20": [
+      41.2,
+      50.7
+    ],
+    "disengaged_chronic:cat20": [
+      5.9,
+      11.1
+    ],
+    "income:High income:cat20": [
+      7.1,
+      8.8
+    ],
+    "income:Low income:cat20": [
+      4.3,
+      6.8
+    ],
+    "income:Middle income:cat20": [
+      5.1,
+      6.8
+    ],
+    "income:Near poor:cat20": [
+      4.6,
+      8.8
+    ],
+    "income:Poor/negative:cat20": [
+      6.0,
+      8.7
+    ],
+    "income:high_income:cat20": [
+      7.1,
+      8.8
+    ],
+    "income:poor_and_near_poor:cat20": [
+      6.1,
+      8.3
+    ],
+    "label:0-1:Insured all year": [
+      38.7,
+      41.2
+    ],
+    "label:0-1:Uninsured all year": [
+      75.8,
+      82.0
+    ],
+    "label:2-3:Insured all year": [
+      15.9,
+      18.7
+    ],
+    "label:2-3:Uninsured all year": [
+      63.8,
+      77.2
+    ],
+    "label:2plus_chronic:insured": [
+      11.5,
+      13.3
+    ],
+    "label:2plus_chronic:uninsured": [
+      56.4,
+      69.9
+    ],
+    "label:4 or more:Insured all year": [
+      3.9,
+      5.6
+    ],
+    "label:4 or more:Uninsured all year": [
+      14.9,
+      41.9
+    ]
+  }
+}

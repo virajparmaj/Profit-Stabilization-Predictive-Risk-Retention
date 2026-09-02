@@ -1,0 +1,4 @@
+pool,n_members,median_usd,mean_usd,coefficient_of_variation,gini,worst_1pct_share_of_pool_spend,worst_5pct_share_of_pool_spend,pct_members_over_20k,pct_expected_cost_above_20k
+Whole population,18463,1584.0,7487.0,2.65,0.781,20.1,48.7,9.1,38.6
+Model-selected low-risk 30%,5548,410.0,2779.0,3.6,0.827,26.7,57.5,2.9,25.1
+Model-selected low-risk 10%,1891,154.0,2187.0,3.77,0.868,32.6,64.5,2.3,27.9

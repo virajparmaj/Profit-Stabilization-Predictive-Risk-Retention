@@ -1,0 +1,6 @@
+metric,unit,poor_and_near_poor,high_income,gap_pct
+Median member,usd,698.0,1827.3,-62.0
+Routine spend (first $5k),usd,1774.4,2368.3,-25.0
+Catastrophic spend (above $5k),usd,3923.3,4559.5,-14.0
+Mean spend,usd,5697.7,6927.8,-18.0
+$20k+ rate,percentage_points,7.1,8.0,-10.0

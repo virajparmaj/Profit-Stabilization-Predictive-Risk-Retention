@@ -1,0 +1,19 @@
+{
+  "mean_usd": 7487.0,
+  "median_usd": 1584.0,
+  "mean_over_median": 4.73,
+  "pct_population_below_mean": 78.9,
+  "mean_percentile_rank": 78.9,
+  "top_1pct_share_of_spend": 20.1,
+  "top_5pct_share_of_spend": 48.7,
+  "top_10pct_share_of_spend": 65.2,
+  "bottom_50pct_share_of_spend": 2.9,
+  "gini": 0.781,
+  "pct_zero_spend": 14.4,
+  "pct_under_500": 31.7,
+  "p90_usd": 18328.0,
+  "p95_usd": 34142.0,
+  "p99_usd": 93466.0,
+  "distribution_axis_cut_usd": 50000,
+  "note": "Distribution file is truncated at $50,000; 5% of members spend above that."
+}

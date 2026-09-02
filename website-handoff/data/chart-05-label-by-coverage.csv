@@ -1,0 +1,7 @@
+chronic_band,coverage,n_members,pct_labelled_low_risk,ci_low,ci_high
+0-1,Insured all year,8540,39.9,38.7,41.2
+0-1,Uninsured all year,915,79.0,75.8,82.0
+2-3,Insured all year,4843,17.3,15.9,18.7
+2-3,Uninsured all year,227,70.9,63.8,77.2
+4 or more,Insured all year,3881,4.7,3.9,5.6
+4 or more,Uninsured all year,57,27.4,14.9,41.9

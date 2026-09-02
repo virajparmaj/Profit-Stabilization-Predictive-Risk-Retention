@@ -1,0 +1,11 @@
+burden_group,office_visit_band,n_members,pop_millions,median_usd,mean_usd,pct_over_20k,acute_share_of_dollars_pct,pct_any_er,pct_any_inpatient
+0-1 chronic conditions,0,3547,70.19,0.0,940.0,0.8,47.5,6.6,1.6
+0-1 chronic conditions,1-2,2852,56.58,603.0,1924.0,1.2,27.4,8.9,1.9
+0-1 chronic conditions,3-5,1440,31.15,1637.0,4700.0,4.6,25.7,13.1,4.1
+0-1 chronic conditions,6-10,725,14.47,2831.0,7984.0,6.9,25.6,16.8,6.6
+0-1 chronic conditions,11+,891,18.48,6105.0,10866.0,13.5,14.6,14.8,7.6
+3+ chronic conditions,0,545,9.21,377.0,6157.0,8.4,53.8,17.3,8.7
+3+ chronic conditions,1-2,933,14.7,1980.0,8958.0,11.9,46.2,20.2,11.8
+3+ chronic conditions,3-5,1174,17.98,3652.0,10914.0,11.7,33.1,23.0,11.6
+3+ chronic conditions,6-10,1231,17.27,6211.0,13674.0,18.1,23.4,22.7,12.3
+3+ chronic conditions,11+,2118,29.51,15399.0,27626.0,39.2,21.6,29.0,19.3
