@@ -1,0 +1,118 @@
+{
+  "raw_n": 18919,
+  "label_threshold_usd": 484.39999999999964,
+  "label_n": 5579,
+  "label_mismatches": 0,
+  "chronic_count_mismatches": 0,
+  "positive_weight_n": 18463,
+  "weighted_label_pct": 30.725241213244068,
+  "burden_original": {
+    "insured": {
+      "n": 8724,
+      "pct_low_label": 12.387536518611027
+    },
+    "uninsured": {
+      "n": 284,
+      "pct_low_label": 63.08229245536593
+    },
+    "three_plus_zero_office": {
+      "n": 545,
+      "population_weight": 9209011.663953,
+      "mean_usd": 6156.505806068482,
+      "sd_usd": 18620.54384353729,
+      "cv": 3.0245311918950804,
+      "pct_zero_spend": 24.261620574524695,
+      "positive_spend_cv": 2.5856857666129884,
+      "pct_ge_20k": 8.355338743731306,
+      "excess_above_20k_usd_per_person": 2841.307782482285,
+      "pct_dollars_excess_above_20k": 46.15130517186552,
+      "pct_dollars_from_people_ge_20k": 73.29442500940526,
+      "pct_low_label": 52.033788844688075,
+      "pct_acute_dollars": 53.80409929986121,
+      "n_with_outpatient_visits": 104
+    }
+  },
+  "burden_dx10_sensitivity": {
+    "insured": {
+      "n": 6268,
+      "pct_low_label": 8.779547929867427
+    },
+    "uninsured": {
+      "n": 168,
+      "pct_low_label": 58.37267732556739
+    },
+    "three_plus_zero_office": {
+      "n": 315,
+      "population_weight": 4834828.572886,
+      "mean_usd": 9282.10688183028,
+      "sd_usd": 23757.656952205303,
+      "cv": 2.559511246170943,
+      "pct_zero_spend": 20.71443946454509,
+      "positive_spend_cv": 2.2331435763499665,
+      "pct_ge_20k": 13.69069313077809,
+      "excess_above_20k_usd_per_person": 4754.327284620677,
+      "pct_dollars_excess_above_20k": 51.22034625487099,
+      "pct_dollars_from_people_ge_20k": 80.71945309574913,
+      "pct_low_label": 45.116459840766154,
+      "pct_acute_dollars": 61.07173347785314,
+      "n_with_outpatient_visits": 69
+    }
+  },
+  "cached_oof_auc_unweighted": 0.7719975315522025,
+  "cached_oof_auc_weighted": 0.7472084224773209,
+  "cached_oof_pools": {
+    "population": {
+      "n": 18463,
+      "population_weight": 334530273.168012,
+      "mean_usd": 7487.2615868298935,
+      "sd_usd": 19807.630112480558,
+      "cv": 2.645510629323038,
+      "pct_zero_spend": 14.449099908181934,
+      "positive_spend_cv": 2.4172262012395365,
+      "pct_ge_20k": 9.101191611834754,
+      "excess_above_20k_usd_per_person": 2891.7315701329276,
+      "pct_dollars_excess_above_20k": 38.622018699326446,
+      "pct_dollars_from_people_ge_20k": 62.933154369659555
+    },
+    "0.3": {
+      "n": 5548,
+      "population_weight": 111884415.208904,
+      "mean_usd": 2778.5535557966737,
+      "sd_usd": 9993.317062145818,
+      "cv": 3.5965896864926576,
+      "pct_zero_spend": 27.61352622946658,
+      "positive_spend_cv": 3.0145291831561214,
+      "pct_ge_20k": 2.904566977955101,
+      "excess_above_20k_usd_per_person": 697.7670784960108,
+      "pct_dollars_excess_above_20k": 25.112601376364157,
+      "pct_dollars_from_people_ge_20k": 46.019644696767564
+    },
+    "0.1": {
+      "n": 1891,
+      "population_weight": 37089221.442233995,
+      "mean_usd": 2186.5344314167,
+      "sd_usd": 8250.170289959693,
+      "cv": 3.7731719068399214,
+      "pct_zero_spend": 40.6624041072446,
+      "positive_spend_cv": 2.8356950436042347,
+      "pct_ge_20k": 2.2703253490949553,
+      "excess_above_20k_usd_per_person": 609.0832893547747,
+      "pct_dollars_excess_above_20k": 27.85610327481271,
+      "pct_dollars_from_people_ge_20k": 48.62252996788761
+    }
+  },
+  "stale_scores": {
+    "n": 15268,
+    "joined_n": 15268,
+    "label_n": 42,
+    "label_mismatches": 3973
+  },
+  "sha256": {
+    "raw": "f00d63d42e6454d00f520b6b1535dd6ef1dfcb90b128adb90f791538b4232d26",
+    "model_ready": "c3218010eac28cfd4916ff099ed3943efe7963aff19f9849149252caa3d07cb8",
+    "notebook_copy": "c3218010eac28cfd4916ff099ed3943efe7963aff19f9849149252caa3d07cb8",
+    "oof": "60c86973c387a805581fd30916ddc754be8f277bad74d42b7368aaaf299819f1",
+    "stale_scores": "49149d9afa53c24207826120cabf829e72bbf6d6fbc8b0c61aea1d1ee6f75627"
+  },
+  "scope": "Descriptive recheck and cached-score evaluation; no fresh model fit or survey confidence intervals."
+}
