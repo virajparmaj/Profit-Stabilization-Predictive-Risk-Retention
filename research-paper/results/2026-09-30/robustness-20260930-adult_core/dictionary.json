@@ -1,0 +1,586 @@
+[
+  {
+    "feature": "AGELAST",
+    "source": [
+      "AGELAST"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "SEX",
+    "source": [
+      "SEX"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "LIMIT_CT",
+    "source": [
+      "ADLHLP31",
+      "IADLHP31",
+      "WLKLIM31",
+      "COGLIM31",
+      "WRKLIM31",
+      "SOCLIM31"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "LIMIT_CT_unknown",
+    "source": [
+      "ADLHLP31",
+      "IADLHP31",
+      "WLKLIM31",
+      "COGLIM31",
+      "WRKLIM31",
+      "SOCLIM31"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "LIMIT_CT_inapplicable",
+    "source": [
+      "ADLHLP31",
+      "IADLHP31",
+      "WLKLIM31",
+      "COGLIM31",
+      "WRKLIM31",
+      "SOCLIM31"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "LIMIT_CT_refused",
+    "source": [
+      "ADLHLP31",
+      "IADLHP31",
+      "WLKLIM31",
+      "COGLIM31",
+      "WRKLIM31",
+      "SOCLIM31"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "LIMIT_CT_dont_know",
+    "source": [
+      "ADLHLP31",
+      "IADLHP31",
+      "WLKLIM31",
+      "COGLIM31",
+      "WRKLIM31",
+      "SOCLIM31"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "LIMIT_CT_not_ascertained",
+    "source": [
+      "ADLHLP31",
+      "IADLHP31",
+      "WLKLIM31",
+      "COGLIM31",
+      "WRKLIM31",
+      "SOCLIM31"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "LIMIT_CT_cannot_compute",
+    "source": [
+      "ADLHLP31",
+      "IADLHP31",
+      "WLKLIM31",
+      "COGLIM31",
+      "WRKLIM31",
+      "SOCLIM31"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "DX_CT",
+    "source": [
+      "HIBPDX",
+      "DIABDX_M18",
+      "CHDDX",
+      "MIDX",
+      "STRKDX",
+      "EMPHDX",
+      "CHOLDX",
+      "ARTHDX",
+      "ASTHDX",
+      "CANCERDX"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "DX_CT_unknown",
+    "source": [
+      "HIBPDX",
+      "DIABDX_M18",
+      "CHDDX",
+      "MIDX",
+      "STRKDX",
+      "EMPHDX",
+      "CHOLDX",
+      "ARTHDX",
+      "ASTHDX",
+      "CANCERDX"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "DX_CT_inapplicable",
+    "source": [
+      "HIBPDX",
+      "DIABDX_M18",
+      "CHDDX",
+      "MIDX",
+      "STRKDX",
+      "EMPHDX",
+      "CHOLDX",
+      "ARTHDX",
+      "ASTHDX",
+      "CANCERDX"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "DX_CT_refused",
+    "source": [
+      "HIBPDX",
+      "DIABDX_M18",
+      "CHDDX",
+      "MIDX",
+      "STRKDX",
+      "EMPHDX",
+      "CHOLDX",
+      "ARTHDX",
+      "ASTHDX",
+      "CANCERDX"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "DX_CT_dont_know",
+    "source": [
+      "HIBPDX",
+      "DIABDX_M18",
+      "CHDDX",
+      "MIDX",
+      "STRKDX",
+      "EMPHDX",
+      "CHOLDX",
+      "ARTHDX",
+      "ASTHDX",
+      "CANCERDX"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "DX_CT_not_ascertained",
+    "source": [
+      "HIBPDX",
+      "DIABDX_M18",
+      "CHDDX",
+      "MIDX",
+      "STRKDX",
+      "EMPHDX",
+      "CHOLDX",
+      "ARTHDX",
+      "ASTHDX",
+      "CANCERDX"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "DX_CT_cannot_compute",
+    "source": [
+      "HIBPDX",
+      "DIABDX_M18",
+      "CHDDX",
+      "MIDX",
+      "STRKDX",
+      "EMPHDX",
+      "CHOLDX",
+      "ARTHDX",
+      "ASTHDX",
+      "CANCERDX"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "PHYEXE53",
+    "source": [
+      "PHYEXE53"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "OFTSMK53",
+    "source": [
+      "OFTSMK53"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2,
+      3
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "RTHLTH53",
+    "source": [
+      "RTHLTH53"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "MNHLTH53",
+    "source": [
+      "MNHLTH53"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "POVCAT23",
+    "source": [
+      "POVCAT23"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "FAMINC23",
+    "source": [
+      "FAMINC23"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "valid income losses",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "TTLP23X",
+    "source": [
+      "TTLP23X"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "valid income losses",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "INSURC23",
+    "source": [
+      "INSURC23"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "UNINS23",
+    "source": [
+      "UNINS23"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "PRVEV23",
+    "source": [
+      "PRVEV23"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "MCREV23",
+    "source": [
+      "MCREV23"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "MCDEV23",
+    "source": [
+      "MCDEV23"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "EMPST53",
+    "source": [
+      "EMPST53"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "OBTOTV23",
+    "source": [
+      "OBTOTV23"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "OPTOTV23",
+    "source": [
+      "OPTOTV23"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "RXTOT23",
+    "source": [
+      "RXTOT23"
+    ],
+    "kind": "numeric",
+    "valid_categories": null,
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  },
+  {
+    "feature": "COVIDEVER53",
+    "source": [
+      "COVIDEVER53"
+    ],
+    "kind": "categorical",
+    "valid_categories": [
+      1,
+      2
+    ],
+    "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+    "negative_values": "reserved codes",
+    "timing": "same-year; not baseline",
+    "population": "adult_core",
+    "documentation": "https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml"
+  }
+]

@@ -1,0 +1,21 @@
+name: Research pipeline checks
+on:
+  pull_request:
+    paths: ['analysis/research_pipeline/**', 'analysis/tests/research_pipeline/**', '.github/workflows/research.yml']
+  push:
+    branches: [main, viraj/research]
+    paths: ['analysis/research_pipeline/**', 'analysis/tests/research_pipeline/**', '.github/workflows/research.yml']
+permissions:
+  contents: read
+jobs:
+  scientific-invariants:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: pip
+          cache-dependency-path: analysis/research_pipeline/requirements-lock.txt
+      - run: python -m pip install -r analysis/research_pipeline/requirements-lock.txt
+      - run: python -m pytest analysis/tests/research_pipeline -q

@@ -11,3 +11,7 @@ interview/
 notes/
 .claude/
 analysis/.cache/
+.venv-research/
+__pycache__/
+.pytest_cache/
+analysis/research_runs/
