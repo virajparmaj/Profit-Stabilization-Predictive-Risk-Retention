@@ -1,0 +1,27 @@
+# Execution prompt: turn the MEPS project into a reproducible empirical study
+
+**Date:** 2026-09-30. **Purpose:** reusable implementation brief, with acceptance criteria.
+
+> Work in this repository on `viraj/research`. Implement the research extension described in `research-paper/02_NOVELTY_AND_RESEARCH_QUESTIONS.md`, `05_VALIDITY_CORRECTIONS.md`, `06_STUDY_PROTOCOL.md`, `07_EXPERIMENT_PLAN.md`, `08_IMPLEMENTATION_ROADMAP.md` and `09_TEST_SPECIFICATIONS.md`. Preserve the original notebooks, data and historical outputs. Inspect current code before adding or replacing functionality.
+>
+> The research question is whether classification-based model choices agree with cohort membership reproducibility and expenditure distributions at matched population capacity. Treat novelty as a hypothesis to establish through evidence, not a promise of a positive result. Use retrospective low-spending terminology; do not claim clinical need, future risk, retention impact or insurer profit from same-year expenditure.
+>
+> Build a source-driven Python package under `analysis/research_pipeline/`, using a clean project virtual environment and pinned dependencies. Read raw HC-251 data and document eligibility, weights, original variable codes, missingness, timing and feature blocks. Use the adult SAQ population and SAQWT23F for the primary ladder, a separate adult core-variable sensitivity, DUID-grouped splits, and the full VARSTR/VARPSU design. Remove ANYLMI23 and ever-COVID from the primary diagnosis count. Preserve unknown and inapplicable codes, preserve legitimate negative income, and put imputation/scaling inside each training fit.
+>
+> Estimate the weighted spending cutoff only from training data; retain the historical $484.40 endpoint as a labeled sensitivity. Always select high P(low-spending label), with deterministic outcome-independent ties and reported achieved weighted capacity. Distinguish matched-capacity policies from frozen numerical thresholds. Implement logistic regression and XGBoost first, using shared splits and normalized training weights. Keep clinical/demographic and random-ranking comparators.
+>
+> Execute E1 paired five-fold evaluation over two declared seeds, including calibration, weighted AUROC/Brier and expenditure summaries computed from within-fold selections. Execute E2 full preprocessing/model refits on fixed reference people, with a separate calibration sample, fixed endpoint, four declared anchors and 200 initial training replicates each. Record Jaccard, population disagreement, baseline-member loss, probability changes and selection frequencies. Do not substitute segment size for membership stability. Keep failed fits and warnings; never silently replace seeds.
+>
+> For E3, report mean, dollar SD, CV, zero mass, positive-spender CV, exceedance and mean excess at matched capacities. Distinguish absolute from relative dispersion and explain the zero-mass identity. For E4, vary burden, missingness, endpoint, training weights, eligible population and domain additions one component at a time. Report unfavorable and null results. Validate survey inference against an independent trusted implementation; keep uncertainty conditional on fixed predictions separate from learning sensitivity across refits.
+>
+> Write immutable run directories containing configurations, data/code/environment hashes, cohort flows, split assignments, scores, metrics, warnings, failures and reports. Refuse silent cache reuse and refuse completed-results reports for failed or altered runs. Keep person-level data, predictions and large caches out of Git; commit aggregate results and reproducibility instructions.
+>
+> Add meaningful tests for missing codes, construct overlap, training-only cutoffs, grouped partitions, probability class direction, weighted ties/capacity, metric identities, full-pipeline refitting, survey design, provenance and failure handling. Run a feasibility pilot before full refits. Add a small CI job using synthetic data, with local raw-data checks explicitly skipped when the public release is absent.
+>
+> Update the README and research pack to distinguish implemented code, completed experiments, exploratory observations and remaining research. Provide a concise execution/results report and regenerated figures. Do not call the paper complete until its primary uncertainty, robustness, benchmark and replication requirements are met. Independent-year replication, longitudinal forecasting, direct-cost baselines and additional design checks must remain visible if not executed.
+>
+> Validate the final diff, commit the changes in the repository's commit style, push `viraj/research`, and open a pull request against the repository's default branch. The PR must explain the problem, resulting behavior, actual tests and runs, main empirical observations, and limitations. Link the PR and the results report. Do not merge the PR.
+
+## Scope interpretation for this implementation
+
+E0–E4 provide the first executable study extension. E3 spending evaluation is integrated into E1 and E2 rather than implemented as a second training run. E4 is an explicit sensitivity runner. Historical notebook reproduction, all secondary inference, independent-year E5 and direct-cost E6 are separate completion items; a running pipeline does not by itself satisfy every paper-readiness gate. The implementation report records the exact scope actually achieved.

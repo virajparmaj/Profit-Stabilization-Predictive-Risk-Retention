@@ -1,0 +1,36 @@
+{
+  "protocol": "meps-low-spending-v1",
+  "raw": "data_raw/h251.csv",
+  "population": "adult_saq",
+  "burden": "dx10",
+  "missingness": "legacy_zero",
+  "label": "training_weighted",
+  "weighted_training": true,
+  "folds": 5,
+  "seeds": [
+    42
+  ],
+  "blocks": [
+    "B3"
+  ],
+  "models": [
+    "logistic",
+    "xgboost"
+  ],
+  "capacity": 0.3,
+  "capacities": [
+    0.1,
+    0.2,
+    0.3,
+    0.4,
+    0.5
+  ],
+  "tail_threshold": 20000,
+  "refits": 200,
+  "design_replicates": 1000,
+  "refit_seed": 1842,
+  "design_seed": 9142,
+  "tie_seed": 7342,
+  "xgb_estimators": 600,
+  "threads": 2
+}

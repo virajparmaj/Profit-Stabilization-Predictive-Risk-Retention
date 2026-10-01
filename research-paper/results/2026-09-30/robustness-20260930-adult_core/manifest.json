@@ -1,0 +1,95 @@
+{
+  "run_id": "robustness-20260930-adult_core",
+  "started_utc": "2026-09-30T17:28:10.980531+00:00",
+  "experiment": "E4",
+  "status": "complete",
+  "config": {
+    "protocol": "meps-low-spending-v1",
+    "raw": "data_raw/h251.csv",
+    "population": "adult_core",
+    "burden": "dx10",
+    "missingness": "explicit",
+    "label": "training_weighted",
+    "weighted_training": true,
+    "folds": 5,
+    "seeds": [
+      42
+    ],
+    "blocks": [
+      "B3"
+    ],
+    "models": [
+      "logistic",
+      "xgboost"
+    ],
+    "capacity": 0.3,
+    "capacities": [
+      0.1,
+      0.2,
+      0.3,
+      0.4,
+      0.5
+    ],
+    "tail_threshold": 20000,
+    "refits": 200,
+    "design_replicates": 1000,
+    "refit_seed": 1842,
+    "design_seed": 9142,
+    "tie_seed": 7342,
+    "xgb_estimators": 600,
+    "threads": 2
+  },
+  "config_sha256": "b3557c4a647c8214fcabb0abf952a619ccde3261d3f4a3576643f31dcf4f85fc",
+  "input_sha256": "f00d63d42e6454d00f520b6b1535dd6ef1dfcb90b128adb90f791538b4232d26",
+  "git_revision": "5221921d06cb4026c294c76033c645b647289e90",
+  "git_status": "M .gitignore\n?? .github/\n?? analysis/research_pipeline/\n?? analysis/tests/\n?? research-paper/16_IMPLEMENTATION_PROMPT.md",
+  "source_hashes": {
+    "analysis/research_pipeline/__init__.py": "ebca12c38b481af1dab06a8630659ce6aa1232635a28a439088b3df93aba231d",
+    "analysis/research_pipeline/__main__.py": "df8f04afa331f90edf99c73d274ae403fa48429a2104de57f73cd0d39484488f",
+    "analysis/research_pipeline/cohort.py": "12636db56848acb71ad2f3b4471f426644f2016348117b422bc58970c5f64062",
+    "analysis/research_pipeline/config.py": "a5546a9915693b6c0e56a2175769b0d25474ca71597ad55198fb16d018d41f8d",
+    "analysis/research_pipeline/dictionary.py": "faa807feb5c342b689b7f7c340d19de76a6b17f4bdf6b451251dfa3a2dbeb46e",
+    "analysis/research_pipeline/experiments.py": "9b362e78b42c7e12bfc7026908847cc274d50902106f5923ac78b44a90c9db75",
+    "analysis/research_pipeline/inference.py": "0dc6a8545bf23b0062b03be9d87cd401b18b18930d5485090be961a7500939fa",
+    "analysis/research_pipeline/metrics.py": "af3d6dc1a6b25332b1ab92f30d27f13a3de7da073e024f9dd9ff9d4f95692d34",
+    "analysis/research_pipeline/models.py": "740aa92efd2bd5a4e74bded43c09bf227b5dff7b303cc9315eb915ea04b254fd",
+    "analysis/research_pipeline/provenance.py": "7696de1d77532da20565fab1df74489c1d8b26d5f92f8c878168aa4348ce9619",
+    "analysis/research_pipeline/refits.py": "0cd97d371ee102cb461ffbcc9550faf6edc6eacce5fdd6f59b103f642a39c0ae",
+    "analysis/research_pipeline/reporting.py": "bac7dbef347a8b190dab99e7c31dc567694c333d2c14eb52a047baba935cdb4f",
+    "analysis/research_pipeline/robustness.py": "1ad204f0505efe12fbaa8d6c01c05a684106de53480f1e04e13ee55697589bd9",
+    "analysis/research_pipeline/selection.py": "a9bc67e0d57f8e18398ebf4a1012fb17aa29cb6e1bcab56013a36e041d69e4d8",
+    "analysis/research_pipeline/splits.py": "ebf8ab57628d29c622c47e5144cd6ca0550b8b57f56870af0fe08bf66f990f29",
+    "analysis/research_pipeline/survey.py": "feaf158c2f1be4c81c4de1b20749a459e889d6ca16bb30c8aea60a4d2dcbe16f",
+    "analysis/research_pipeline/targets.py": "379b9c511ec8f4641a32286e37308b26fd7e17468b087ef149cdccd4dd11f97a"
+  },
+  "versions": {
+    "numpy": "2.4.1",
+    "pandas": "3.0.0",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "xgboost": "3.1.1",
+    "pyarrow": "22.0.0",
+    "PyYAML": "6.0.3"
+  },
+  "python": "3.11.14",
+  "platform": "macOS-27.0-arm64-arm-64bit",
+  "uncertainty": "Survey evaluation conditional on fixed predictions; E2 learning variability separate",
+  "scope": "Exploratory same-year HC-251, not prospective or causal",
+  "elapsed_seconds": 21.78786250000121,
+  "error": null,
+  "outputs": {
+    "cohort.parquet": "4417198a453769cbe443f3d2db16e94e17835f70d5d52cf003c7050e4ac51ccc",
+    "cohort_flow.json": "5249a6344abc7b239956577b8441fd7d4db562311bca26664983cfb0f28667ff",
+    "config.json": "b3557c4a647c8214fcabb0abf952a619ccde3261d3f4a3576643f31dcf4f85fc",
+    "design.csv": "9eb3dc0e9732a7d8260b18ab6ff02bf8649ea168bc5a4574fb4374ef4b594aeb",
+    "dictionary.json": "0c0924dd3c72b396f6fbe161d0a81db417fbacc35a70ad1c839f42bd8550daae",
+    "fit_diagnostics.json": "6150912b66e3fdbf2173a2a030e87dd80bb21ea5fb1b4b3921dfb34b678c4a6e",
+    "performance.csv": "666334824ccc9724df3945c856edf9df43f4ce2411ddffd4f2f69b60356ff26b",
+    "policies_aggregate.csv": "d3b8d1195b236a9f89ac56bf08a4d8660d5bdc45b0a16fec228262a292cb0b58",
+    "policies_by_fold.csv": "255a24cfd6abbd67c6dcef217bb665912d056e4d9c2c0b8b50c808fdf571143b",
+    "population_spending.json": "b99e9ca8b9a312e0e9e518d5f2d81e4021940a19683a825d743447302a93a8c5",
+    "scores.parquet": "caaa783a72ec5586d679c7f4b0fbe966eacb3980ee4481c99b62e9b76299d961",
+    "splits.csv": "4f0d73b101710aaad54fb299e528b9524f74aa1e8005083b248b867c259deeed",
+    "survey_mean.json": "c88c92a47d3a55877e7fbe0729fdb6e402b37a9b30a49db2741f72f34ab6a842"
+  }
+}

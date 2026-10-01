@@ -1,8 +1,10 @@
 # Research-paper development pack
 
-**Updated:** 2026-09-25. **Status:** Planning and evidence pack; study extension not yet implemented.
+**Updated:** 2026-10-01. **Status:** Core research pipeline implemented and exploratory E1–E4 results available; independent replication and remaining inference are pending.
 
 [Folder index](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/00_START_HERE.md) · [Results register](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/10_RESULTS_REGISTER.md)
+
+[Verification report](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/19_VERIFICATION_AND_PR_READINESS.md) records the completed integrity fixes, exact numerical comparisons, and new derived evidence.
 
 ## Recommendation
 
@@ -14,15 +16,20 @@ The plausible novelty is the decision-relevant empirical comparison. Existing li
 
 ## Current state
 
-- **Done:** repository/evidence review, targeted literature review, deterministic legacy-label/count checks, cached-score evaluation, descriptive burden sensitivity, this implementation and paper plan.
-- **Not done:** corrected cohort/pipeline, fresh model reproduction, paired model experiments, repeated training refits, survey confidence intervals, independent-year replication or a completed manuscript.
-- **Main existing signal:** nominal 30% selection lowers spending mean from $7,487 to $2,779 and SD from $19,808 to $9,993, while CV rises from 2.65 to 3.60. These historical cache summaries need corrected, matched-capacity validation.
-- **Critical blockers:** reversed selection in the old stability notebook, size-versus-identity confusion, diagnosis/limitation construct overlap, missing-code handling and survey/eligibility issues.
+- **Implemented:** corrected source-built cohort, grouped model evaluation, weighted selection, full-pipeline refits, survey-aware conditional inference, sensitivity runner and immutable provenance.
+- **Completed:** 140 E1 fits, 800 main E2 refits, 80 pilot refits, 90 E4 fits, R survey benchmark, and the original 23 scientific tests. The verification pass now has 46 passing tests plus 10 repeat E1 fits and 80 repeat E2 refits.
+- **Main result:** B3 models have similar AUROC, but logistic averages 6.15% membership disagreement versus 10.54% for XGBoost at matched capacity. This is internal exploratory evidence, not a population confidence claim.
+- **Remaining:** independent-year replication, direct-cost baselines, fuller secondary/reference-population inference and final manuscript validation.
+
+Read [Implementation and results](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/17_IMPLEMENTATION_AND_RESULTS.md) first. The [execution prompt](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/16_IMPLEMENTATION_PROMPT.md) records the requested work and acceptance criteria.
 
 ## Reading map
 
 | File | Purpose |
 |---|---|
+| [16_IMPLEMENTATION_PROMPT.md](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/16_IMPLEMENTATION_PROMPT.md) | Reusable execution prompt and acceptance criteria. |
+| [17_IMPLEMENTATION_AND_RESULTS.md](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/17_IMPLEMENTATION_AND_RESULTS.md) | Actual code, experiment results, figures and remaining paper requirements. |
+| [18_PROTOCOL_DEVIATIONS_AND_NEXT_STEPS.md](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/18_PROTOCOL_DEVIATIONS_AND_NEXT_STEPS.md) | Scope decisions, limitations and prioritized follow-up. |
 | [01_PROJECT_AND_DATA.md](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/01_PROJECT_AND_DATA.md) | What was actually investigated; dataset, labels, models and populations. |
 | [02_NOVELTY_AND_RESEARCH_QUESTIONS.md](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/02_NOVELTY_AND_RESEARCH_QUESTIONS.md) | Recommended modest contribution, priorities, hypotheses and falsifiers. |
 | [03_RELATED_WORK.md](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/03_RELATED_WORK.md) | Closest papers, overlapping contributions and remaining research boundary. |
@@ -41,12 +48,12 @@ The plausible novelty is the decision-relevant empirical comparison. Existing li
 
 Start with **02 → 08 → 10 → 12** for the research decision, execution plan, actual evidence and readiness assessment. Read **05 → 06 → 09** before implementing. Use **11** only after new results justify manuscript claims.
 
-## Smallest credible next step
+## Original minimum implementation plan (now partly executed)
 
 Implement E0/P0–P4: reconstruct scientific variables, group splits correctly, define weighted selection, train the two B3 anchors from source and validate the statistical helpers. Then run a feasibility pilot followed by E1–E4. Prioritize an independent-year replication before expensive model expansion. A prospective claim requires the additional longitudinal E7 design.
 
-The 16 Markdown files are intended to become the evidence and methods backbone of a paper. Their “proposed” and “not run” labels are deliberate: plans, saved notebook outputs, cached-score rechecks and fresh experiments are different kinds of evidence.
+These Markdown files are intended to become the evidence and methods backbone of a paper. Their “proposed” and “not run” labels are deliberate: plans, saved notebook outputs, cached-score rechecks and fresh experiments are different kinds of evidence.
 
 ## Maintaining this pack
 
-The results register is authoritative for execution status. Documents 06–09 define planned work; the original audit's Python/JSON files supply exact historical numbers. Update results and provenance together, record protocol deviations, and only replace preliminary paper language after corrected outputs exist. No original data, notebook or model implementation was changed when this folder was created.
+The results register is authoritative for execution status. Documents 06–09 define planned work; the original audit's Python/JSON files supply exact historical numbers. Update results and provenance together, record protocol deviations, and only replace preliminary paper language after corrected outputs exist. Original data and notebooks remain unchanged. A new corrected pipeline was added on 2026-09-30; dated plans below must be read alongside the implementation report.

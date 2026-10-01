@@ -1,0 +1,48 @@
+{
+  "e1": {
+    "prediction_rows_identical": 19552,
+    "membership_decisions_identical": 97760,
+    "performance_rows_identical": 10,
+    "cohort_and_splits_identical": true
+  },
+  "e2_vs_full": {
+    "prediction_rows_identical_by_anchor": {
+      "B2_logistic_refit_scores.parquet": 39380,
+      "B3_logistic_refit_scores.parquet": 39380,
+      "B3_xgboost_refit_scores.parquet": 39380,
+      "B4_xgboost_refit_scores.parquet": 39380
+    },
+    "base_predictions_identical": true,
+    "endpoint_and_reference_identical": true,
+    "metric_rows_identical": 168
+  },
+  "e2_vs_pilot": {
+    "prediction_rows_identical_by_anchor": {
+      "B2_logistic_refit_scores.parquet": 39380,
+      "B3_logistic_refit_scores.parquet": 39380,
+      "B3_xgboost_refit_scores.parquet": 39380,
+      "B4_xgboost_refit_scores.parquet": 39380
+    },
+    "base_predictions_identical": true,
+    "endpoint_and_reference_identical": true,
+    "metric_rows_identical": 168
+  },
+  "historical_policy_rows_unchanged": 140,
+  "new_random_policy_rows": 10,
+  "run_diagnostics": {
+    "verification-e1-20261001": {
+      "fits_including_bases": 10,
+      "warnings": 0,
+      "failed": 0,
+      "elapsed_seconds": 5.312376499990933
+    },
+    "verification-e2-pilot-20261001": {
+      "fits_including_bases": 84,
+      "warnings": 0,
+      "failed": 0,
+      "elapsed_seconds": 16.977202375011984
+    }
+  },
+  "source_files_unchanged": true,
+  "source_files_checked": 263
+}

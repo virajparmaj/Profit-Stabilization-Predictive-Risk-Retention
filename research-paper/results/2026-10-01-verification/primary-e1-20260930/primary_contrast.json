@@ -1,0 +1,67 @@
+{
+  "auc": {
+    "estimate": 0.00443374092806198,
+    "se": 0.0038983280773952026,
+    "low": -0.00320684170355389,
+    "high": 0.01207432355967785,
+    "valid_replicates": 1000,
+    "half_replicate_se": 0.00390909285258095,
+    "se_relative_mc_approx": 0.022360679774997897,
+    "status": "conditional_fixed_predictions"
+  },
+  "brier": {
+    "estimate": -0.00197977793172896,
+    "se": 0.001391846645716324,
+    "low": -0.004707747229335835,
+    "high": 0.0007481913658779153,
+    "valid_replicates": 1000,
+    "half_replicate_se": 0.0013872908117215413,
+    "se_relative_mc_approx": 0.022360679774997897,
+    "status": "conditional_fixed_predictions"
+  },
+  "mean": {
+    "estimate": -404.5426720811629,
+    "se": 237.03041173505017,
+    "low": -869.1137423225614,
+    "high": 60.02839816023561,
+    "valid_replicates": 1000,
+    "half_replicate_se": 232.10145042021733,
+    "se_relative_mc_approx": 0.022360679774997897,
+    "status": "conditional_fixed_predictions"
+  },
+  "sd": {
+    "estimate": -1507.7604702825674,
+    "se": 1155.2638879227127,
+    "low": -3772.0360832508018,
+    "high": 756.5151426856669,
+    "valid_replicates": 1000,
+    "half_replicate_se": 1113.1516068298783,
+    "se_relative_mc_approx": 0.022360679774997897,
+    "status": "conditional_fixed_predictions"
+  },
+  "cv": {
+    "estimate": -0.0679072034626691,
+    "se": 0.1837822908927176,
+    "low": -0.4281138746086592,
+    "high": 0.292299467683321,
+    "valid_replicates": 1000,
+    "half_replicate_se": 0.1819086548511654,
+    "se_relative_mc_approx": 0.022360679774997897,
+    "status": "conditional_fixed_predictions"
+  },
+  "mean_excess": {
+    "estimate": -279.2488231182255,
+    "se": 178.43098131807815,
+    "low": -628.967120227798,
+    "high": 70.46947399134689,
+    "valid_replicates": 1000,
+    "half_replicate_se": 172.74476357460284,
+    "se_relative_mc_approx": 0.022360679774997897,
+    "status": "conditional_fixed_predictions"
+  },
+  "contrast": "B3 logistic minus B3 XGBoost",
+  "capacity": 0.3,
+  "fold_aggregation": "test-weight-mass weighted AUC/Brier; selection within fold",
+  "multiplicity": "One prespecified model contrast; other endpoints descriptive, no omnibus significance claim",
+  "uncertainty": "Rao-Wu PSU bootstrap; fixed predictions, fixed grouped folds; quota reapplied per replicate"
+}

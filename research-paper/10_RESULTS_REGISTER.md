@@ -1,10 +1,32 @@
 # Results register: completed, provisional and pending
 
-**Updated:** 2026-09-25. **Status:** Actual historical rechecks recorded; new research experiments explicitly pending.
+## Verification update — 2026-10-01
+
+[Verification report](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/19_VERIFICATION_AND_PR_READINESS.md): 46 tests passed (45 passed/1 skipped without raw data). Ten E1 fits and 80 E2 refits plus four base fits reproduced the saved predictions, membership and metrics exactly. No failures or estimator warnings. New aggregate/figure exports are in `results/2026-10-01-verification/`; original September 30 evidence is unchanged. This is a verification pass, not E5/E6 or a full repeat of the study.
+
+## Main study execution — 2026-09-30
+
+The corrected core study has now run. See [actual implementation/results](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/17_IMPLEMENTATION_AND_RESULTS.md) and the aggregate exports under `results/2026-09-30/`. The September 25 historical checks below remain valid historical evidence.
+
+| Experiment | Current status |
+|---|---|
+| E0 | Corrected cohort, legacy label/count checks and independent survey benchmark complete; exact legacy model reproduction pending |
+| E1 | 140 fits complete; primary paired conditional inference with 1,000 PSU replicates complete; broader secondary inference pending |
+| E2 | 800 refits complete with no failures; fixed-reference learning variability quantified; reference-population/joint uncertainty pending |
+| E3 | Integrated expenditure metrics and capacity curves complete; zero-mass standardization exported; full threshold/outlier sensitivity pending |
+| E4 | Seven declared sensitivity variants complete, 90 fits; E2 sensitivity and full adjusted access analyses remain |
+| E5–E7 | Not run |
+| E8–E10 | Optional; not run |
+
+**Tests:** 23 passed. **Independent benchmark:** Python matched R survey 4.5 mean and SE. **Claim status:** bounded exploratory empirical evidence; no finished-paper, prospective, causal or profitability claim.
+
+
+
+**Updated:** 2026-09-30. **Status:** Current corrected-study status above; historical checks and earlier pending slots retained below.
 
 [Folder index](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/00_START_HERE.md) · [Results register](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/10_RESULTS_REGISTER.md)
 
-## Execution record
+## Historical execution record — 2026-09-25
 
 **Last rerun:** 2026-09-25. **Command:** `/tmp/profit-stabilization-research-review-venv/bin/python analysis/research_review/verify_existing_evidence.py`, executed from the repository root. **Exit status:** 0. **Scope:** deterministic descriptive checks and existing-cache evaluation. No fresh model fits, refit-stability analysis, design-based confidence intervals or external replication were performed.
 
@@ -65,7 +87,7 @@ Among the original 545 people with count >=3 and zero office visits, 104 have ou
 
 The small numerical difference does not establish superiority or equivalence. Saved B0/B4/B5 XGBoost AUROCs are 0.579418/0.824610/0.949921; their same-year label performance does not establish future cost prediction.
 
-## Corrected study result slots
+## Historical experiment status on 2026-09-25 (superseded by the update above)
 
 | Experiment | Status | Evidence still required |
 |---|---|---|
