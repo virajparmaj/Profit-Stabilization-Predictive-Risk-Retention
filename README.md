@@ -18,6 +18,8 @@ The source-built package in `analysis/research_pipeline/` adds:
 
 The research target is a low-expenditure/zero-ER/zero-inpatient label measured in the same year. High predicted probability selects the low-spending cohort. Cohort size, member identity, dollar SD and relative dispersion are evaluated separately.
 
+The verification pass now has **46 passing tests** and exact targeted reproduction of saved predictions and membership. Read `research-paper/19_VERIFICATION_AND_PR_READINESS.md` for results, current report commands and remaining paper requirements. Updated aggregate evidence and figures are in `research-paper/results/2026-10-01-verification/`.
+
 ## Run the study
 
 Download the public [2023 HC-251 MEPS release](https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml) and place its CSV at `data_raw/h251.csv`. From the repository root:

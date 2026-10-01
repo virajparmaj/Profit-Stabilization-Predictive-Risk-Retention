@@ -1,6 +1,10 @@
 # Results register: completed, provisional and pending
 
-## Current execution update — 2026-09-30
+## Verification update — 2026-10-01
+
+[Verification report](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/19_VERIFICATION_AND_PR_READINESS.md): 46 tests passed (45 passed/1 skipped without raw data). Ten E1 fits and 80 E2 refits plus four base fits reproduced the saved predictions, membership and metrics exactly. No failures or estimator warnings. New aggregate/figure exports are in `results/2026-10-01-verification/`; original September 30 evidence is unchanged. This is a verification pass, not E5/E6 or a full repeat of the study.
+
+## Main study execution — 2026-09-30
 
 The corrected core study has now run. See [actual implementation/results](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/17_IMPLEMENTATION_AND_RESULTS.md) and the aggregate exports under `results/2026-09-30/`. The September 25 historical checks below remain valid historical evidence.
 

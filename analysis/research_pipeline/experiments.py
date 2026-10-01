@@ -1,11 +1,11 @@
 """Paired E1 classification and E3 expenditure comparisons on held-out people."""
 
-import time
-import warnings
+import json
 
 import numpy as np
 import pandas as pd
 
+from .diagnostics import record_fit
 from .metrics import classification, selected_spending, spending
 from .models import fit_model, positive_probability
 from .provenance import write_json
@@ -33,17 +33,13 @@ def policy_rows(test, scores, config, metadata: dict) -> list[dict]:
     return rows
 
 
-def evaluate_fit(train, test, threshold, block, model, config, seed):
-    with warnings.catch_warnings(record=True) as caught:
-        warnings.simplefilter("always")
-        start = time.perf_counter()
-        pipe = fit_model(train, labels(train, threshold), block, model, config, seed)
-        p = positive_probability(pipe, test)
-    return p, time.perf_counter() - start, [str(w.message) for w in caught]
-
-
 def run_e1(frame, design, config, out) -> None:
     scores, performance, policies, assignments, diagnostics = [], [], [], [], []
+    experiment = (
+        json.loads((out / "manifest.json").read_text())["experiment"]
+        if (out / "manifest.json").exists()
+        else "E1"
+    )
     for seed in config.seeds:
         for fold, train_ix, test_ix in outer_folds(frame, config.folds, seed):
             train, test = frame.iloc[train_ix], frame.iloc[test_ix].copy()
@@ -52,9 +48,6 @@ def run_e1(frame, design, config, out) -> None:
             assignments.append(test[["DUPERSID", "DUID"]].assign(seed=seed, fold=fold))
             for block in config.blocks:
                 for model in config.models:
-                    p, elapsed, messages = evaluate_fit(
-                        train, test, threshold, block, model, config, seed
-                    )
                     meta = {
                         "seed": seed,
                         "fold": fold,
@@ -63,6 +56,12 @@ def run_e1(frame, design, config, out) -> None:
                         "cutoff": threshold,
                         "run_id": out.name,
                     }
+                    with record_fit(out, experiment=experiment, **meta) as diagnostic:
+                        pipe = fit_model(
+                            train, labels(train, threshold), block, model, config, seed
+                        )
+                        p = positive_probability(pipe, test)
+                    elapsed = diagnostic["elapsed_seconds"]
                     performance.append(
                         {
                             **meta,
@@ -83,7 +82,7 @@ def run_e1(frame, design, config, out) -> None:
                     ]
                     scores.append(test[columns].assign(score=p, **meta))
                     policies.extend(policy_rows(test, p, config, meta))
-                    diagnostics.append({**meta, "fit_seconds": elapsed, "warnings": messages})
+                    diagnostics.append(diagnostic)
                     print(f"E1 seed={seed} fold={fold} {block}/{model}: {elapsed:.2f}s", flush=True)
             random_scores = np.argsort(np.argsort(tie_keys(test.DUPERSID, config.tie_seed))) / len(
                 test
@@ -123,6 +122,14 @@ def run_e1(frame, design, config, out) -> None:
 
 def aggregate_policies(scored, config) -> pd.DataFrame:
     """Apply each policy within fit/fold, then summarize selected people jointly."""
+    # Reconstruct the already declared seeded random policy from one copy of each person/fold.
+    random = scored.drop_duplicates(["seed", "fold", "DUPERSID"]).copy()
+    random["block"], random["model"] = "random", "random"
+    for _, indices in random.groupby(["seed", "fold"]).groups.items():
+        random.loc[indices, "score"] = np.argsort(
+            np.argsort(tie_keys(random.loc[indices, "DUPERSID"], config.tie_seed))
+        ) / len(indices)
+    scored = pd.concat([scored[scored.model != "random"], random], ignore_index=True)
     rows = []
     for (seed, block, model), group in scored.groupby(["seed", "block", "model"]):
         group = group.reset_index(drop=True)

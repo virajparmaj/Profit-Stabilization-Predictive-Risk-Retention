@@ -20,6 +20,7 @@ def parser() -> argparse.ArgumentParser:
     )
     cli.add_argument("--experiment", choices=["E1", "E2"], default="E1")
     cli.add_argument("--run-id", required=True)
+    cli.add_argument("--output", type=Path, help="Fresh directory required for derived reports")
     cli.add_argument(
         "--pilot",
         action="store_true",
@@ -46,17 +47,19 @@ def execute(args) -> None:
         frame.to_parquet(out / "cohort.parquet", index=False)
         design.to_csv(out / "design.csv", index=False)
         write_json(out / "cohort_flow.json", flow)
-        write_json(out / "dictionary.json", dictionary(config.population, config.burden))
+        write_json(
+            out / "dictionary.json",
+            dictionary(config.population, config.burden, config.missingness),
+        )
         write_json(out / "survey_mean.json", taylor_mean(frame, design, "TOTEXP23"))
         if args.command == "run":
             run_experiment(args, frame, design, config, out)
         finish_run(out, manifest, "complete", time.perf_counter() - started)
-        render_report(out)
-    except Exception as error:
+    except BaseException as error:
         finish_run(
             out,
             manifest,
-            "failed",
+            "interrupted" if isinstance(error, (KeyboardInterrupt, SystemExit)) else "failed",
             time.perf_counter() - started,
             f"{type(error).__name__}: {error}",
         )
@@ -89,7 +92,9 @@ def main() -> None:
             for c in args.run_id
         ):
             raise ValueError("Invalid run ID")
-        render_report(ROOT / "analysis/research_runs" / args.run_id)
+        if args.output is None:
+            raise ValueError("report requires --output pointing to a new directory")
+        render_report(ROOT / "analysis/research_runs" / args.run_id, args.output)
     else:
         execute(args)
 

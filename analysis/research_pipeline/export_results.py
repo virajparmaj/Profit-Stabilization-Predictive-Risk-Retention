@@ -8,8 +8,9 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from .aggregation import weighted_metrics
 from .provenance import ROOT, sha256, write_json
-from .reporting import verify_run
+from .reporting import render_report, verify_run
 
 PUBLIC_FILES = [
     "manifest.json",
@@ -25,18 +26,20 @@ PUBLIC_FILES = [
     "refit_summary.csv",
     "endpoint.json",
     "failures.json",
-    "REPORT.md",
 ]
 
 
 def export_run(source: Path, output: Path) -> dict:
     manifest = verify_run(source)
     target = output / source.name
-    target.mkdir(parents=True, exist_ok=True)
+    target.mkdir(parents=True, exist_ok=False)
     for name in PUBLIC_FILES:
         path = source / name
         if path.exists():
+            if name != "manifest.json" and name not in manifest["outputs"]:
+                raise ValueError(f"Unhashed export input: {name}")
             shutil.copy2(path, target / name)
+    render_report(source, target / "derived")
     return {
         "run_id": source.name,
         "manifest_sha256": sha256(source / "manifest.json"),
@@ -65,6 +68,11 @@ def paired_learning_summary(source: Path, output: Path) -> None:
         "cv",
     ]:
         difference = a[metric] - b[metric]
+        expected = json.loads((source / "config.json").read_text())["refits"]
+        valid = int(np.isfinite(difference).sum())
+        complete = valid == expected and len(difference) == expected
+        if not complete:
+            difference = difference * np.nan
         rows.append(
             {
                 "metric": metric,
@@ -74,6 +82,8 @@ def paired_learning_summary(source: Path, output: Path) -> None:
                 "refit_q975": difference.quantile(0.975),
                 "mean_monte_carlo_se": difference.std() / np.sqrt(len(difference)),
                 "paired_refits": len(difference),
+                "valid_pairs": valid,
+                "expected_pairs": expected,
             }
         )
     pd.DataFrame(rows).to_csv(output / "paired_learning_sensitivity.csv", index=False)
@@ -97,8 +107,9 @@ def robustness_summary(sources: list[Path], output: Path) -> None:
                     "population": config["population"],
                     "block": block,
                     "model": model,
-                    "auc": np.average(group.auc, weights=group.weight_sum),
-                    "brier": np.average(group.brier, weights=group.weight_sum),
+                    **weighted_metrics(
+                        group, ["auc", "brier"], config["folds"] * len(config["seeds"])
+                    ),
                     **{k: chosen[k] for k in ["capacity", "mean", "sd", "cv", "zero_share"]},
                 }
             )
@@ -117,7 +128,7 @@ def main() -> None:
     sensitivities = sorted(p for p in base.glob(args.robustness_prefix + "-*") if p.is_dir())
     if len(sensitivities) != 7:
         raise ValueError("Expected all seven prespecified E4 variants")
-    args.output.mkdir(parents=True, exist_ok=True)
+    args.output.mkdir(parents=True, exist_ok=False)
     runs = [export_run(source, args.output) for source in primary + sensitivities]
     paired_learning_summary(primary[1], args.output)
     robustness_summary(sensitivities, args.output)

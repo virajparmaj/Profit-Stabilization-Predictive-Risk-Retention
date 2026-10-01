@@ -73,7 +73,7 @@ def blocks(population: str = "adult_saq") -> dict[str, list[str]]:
     }
 
 
-def dictionary(population: str, burden: str = "dx10") -> list[dict]:
+def dictionary(population: str, burden: str = "dx10", missingness: str = "explicit") -> list[dict]:
     result = []
     for name in dict.fromkeys(f for fs in blocks(population).values() for f in fs):
         diagnoses = DX + ["ANYLMI23", "COVIDEVER53"] if burden == "legacy12" else DX
@@ -88,7 +88,10 @@ def dictionary(population: str, burden: str = "dx10") -> list[dict]:
                 "source": sources,
                 "kind": "categorical" if name in CATEGORIES else "numeric",
                 "valid_categories": CATEGORIES.get(name),
-                "missing": "distinct reserved codes; training-fold numeric median plus code indicator",
+                "missing": missing_description(name, missingness),
+                "missingness": missingness,
+                "burden": burden,
+                "weight": "SAQWT23F" if population == "adult_saq" else "PERWT23F",
                 "negative_values": "valid income losses" if name in INCOME else "reserved codes",
                 "timing": (
                     "same-year; round 4/2 SAQ" if name in HEALTH[2:] else "same-year; not baseline"
@@ -97,4 +100,32 @@ def dictionary(population: str, burden: str = "dx10") -> list[dict]:
                 "documentation": DOC,
             }
         )
+        if (
+            name not in CATEGORIES
+            and name not in INCOME
+            and not name.startswith(("DX_CT", "LIMIT_CT"))
+        ):
+            result.append(
+                {
+                    **result[-1],
+                    "feature": f"{name}_code",
+                    "kind": "categorical",
+                    "valid_categories": [0] + SENTINELS,
+                    "missing": "Original negative code; zero denotes observed value. Retained even in partial legacy_zero sensitivity.",
+                }
+            )
     return result
+
+
+def missing_description(name: str, missingness: str) -> str:
+    if name in INCOME:
+        return "Negative income losses preserved; unexpected raw NaN rejected."
+    if name.startswith(("DX_CT", "LIMIT_CT")):
+        if missingness == "legacy_zero":
+            return "Unknown source responses contribute zero; all count missingness auxiliaries forced to zero."
+        return "Affirmative lower-bound count; all-unknown total is NaN imputed within training; separate counts preserve unknown and each reserved code."
+    if missingness == "legacy_zero":
+        return "Partial legacy sensitivity: negative values replaced by zero; numeric code indicators retained. Not exact historical notebook reproduction."
+    if name in CATEGORIES:
+        return "Distinct reserved categories preserved and encoded inside each fit."
+    return "Negative values become NaN; training-fold median imputation plus original-code categorical indicator."

@@ -1,11 +1,10 @@
 """E2: pipeline refitting with fixed reference people and a fixed endpoint."""
 
-import time
-import warnings
-
 import numpy as np
 import pandas as pd
 
+from .aggregation import refit_statistics
+from .diagnostics import record_fit
 from .metrics import classification, membership, selected_spending
 from .models import fit_model, positive_probability
 from .provenance import write_json
@@ -53,42 +52,39 @@ def evaluate_refit(reference, p, original_p, base, numerical, threshold, config)
 
 
 def run_anchor(training, calibration, reference, design, threshold, block, model, config, out):
-    original_p, base, numerical = base_fit(
-        training, calibration, reference, threshold, block, model, config
-    )
+    metadata = {"experiment": "E2", "block": block, "model": model, "seed": config.seeds[0]}
+    with record_fit(out, **metadata, refit=-1) as base_diagnostic:
+        original_p, base, numerical = base_fit(
+            training, calibration, reference, threshold, block, model, config
+        )
     base_rows, _ = evaluate_refit(
         reference, original_p, original_p, base, numerical, threshold, config
     )
     rows = [{"refit": -1, "block": block, "model": model, **r} for r in base_rows]
-    predictions, failures, diagnostics = [], [], []
+    predictions, failures, diagnostics = [], [], [base_diagnostic]
     for b in range(config.refits):
-        started = time.perf_counter()
         try:
-            sampled = resample_training(training, design, config.refit_seed + b)
-            with warnings.catch_warnings(record=True) as caught:
-                warnings.simplefilter("always")
+            with record_fit(
+                out, **metadata, refit=b, resample_seed=config.refit_seed + b
+            ) as diagnostic:
+                sampled = resample_training(training, design, config.refit_seed + b)
                 pipe = fit_model(
                     sampled, labels(sampled, threshold), block, model, config, config.seeds[0]
                 )
                 p = positive_probability(pipe, reference)
-            summaries, selected = evaluate_refit(
-                reference, p, original_p, base, numerical, threshold, config
-            )
+                summaries, selected = evaluate_refit(
+                    reference, p, original_p, base, numerical, threshold, config
+                )
             rows.extend({"refit": b, "block": block, "model": model, **r} for r in summaries)
             predictions.append(
                 pd.DataFrame(
                     {"DUPERSID": reference.DUPERSID, "score": p, "selected": selected, "refit": b}
                 )
             )
-            diagnostics.append(
-                {
-                    "refit": b,
-                    "seconds": time.perf_counter() - started,
-                    "warnings": [str(w.message) for w in caught],
-                }
-            )
         except Exception as error:
             failures.append({"refit": b, "type": type(error).__name__, "error": str(error)})
+        finally:
+            diagnostics.append(diagnostic)
         if (b + 1) % 10 == 0:
             print(
                 f"E2 {block}/{model}: {b+1}/{config.refits} refits, failures={len(failures)}",
@@ -149,15 +145,14 @@ def run_e2(frame, design, config, out) -> None:
         failed.extend({"block": block, "model": model, **f} for f in failures)
         pd.DataFrame(rows).to_csv(out / "refit_metrics.csv", index=False)
     write_json(out / "failures.json", failed)
-    summarize_refits(out)
+    summarize_refits(out, config.refits)
     if failed:
         raise RuntimeError(
             f"{len(failed)} prespecified refits failed; results saved, no replacement seeds"
         )
 
 
-def summarize_refits(out) -> None:
-    metrics = pd.read_csv(out / "refit_metrics.csv")
+def refit_summary_table(metrics: pd.DataFrame, expected: int) -> pd.DataFrame:
     keys = [
         "auc",
         "jaccard",
@@ -169,10 +164,28 @@ def summarize_refits(out) -> None:
         "cv",
         "capacity",
     ]
-    grouped = metrics[metrics.refit >= 0].groupby(["block", "model", "policy"])[keys]
-    summary = grouped.agg(["mean", "std", "min", "max"])
-    summary.columns = ["_".join(c) for c in summary.columns]
-    summary.to_csv(out / "refit_summary.csv")
+    rows = []
+    for (block, model, policy), group in metrics[metrics.refit >= 0].groupby(
+        ["block", "model", "policy"]
+    ):
+        rows.append(
+            {
+                "block": block,
+                "model": model,
+                "policy": policy,
+                **{
+                    f"{key}_{stat}": value
+                    for key in keys
+                    for stat, value in refit_statistics(group[key], expected).items()
+                },
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def summarize_refits(out, expected: int) -> None:
+    metrics = pd.read_csv(out / "refit_metrics.csv")
+    refit_summary_table(metrics, expected).to_csv(out / "refit_summary.csv", index=False)
     frequencies = []
     for path in sorted(out.glob("*_refit_scores.parquet")):
         values = pd.read_parquet(path)

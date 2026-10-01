@@ -24,10 +24,10 @@ Run from the repository root. Run IDs are immutable: rerunning an existing ID fa
 .venv-research/bin/python -m analysis.research_pipeline run --experiment E2 --run-id my-e2-pilot --pilot
 .venv-research/bin/python -m analysis.research_pipeline run --experiment E2 --run-id my-e2
 .venv-research/bin/python -m analysis.research_pipeline.robustness --config analysis/research_pipeline/configs/primary_2023.yaml --prefix my-e4
-.venv-research/bin/python -m analysis.research_pipeline report --run-id my-e1
+.venv-research/bin/python -m analysis.research_pipeline report --run-id my-e1 --output /tmp/my-e1-derived-new
 ```
 
-`build` and `validate` reconstruct and validate the cohort/design and emit the same core artifacts. `validate` is not a replacement for the pytest suite or the independent R check. `E1` also performs E3 expenditure evaluation; `--inference` adds the prespecified B3 logistic-minus-XGBoost contrast using survey PSU replicates. `E2` uses four anchors regardless of the E1 block/model list. `--pilot` reduces E2 to 20 refits per anchor and conditional inference to 50 evaluation replicates; pilot status is saved in the manifest.
+`build` and `validate` reconstruct and validate the cohort/design and emit the same core artifacts. `validate` is not a replacement for the pytest suite or the independent R check. `E1` also performs E3 expenditure evaluation; `--inference` adds the prespecified B3 logistic-minus-XGBoost contrast using survey PSU replicates. `E2` uses four anchors regardless of the E1 block/model list. `--pilot` reduces E2 to 20 refits per anchor and conditional inference to 50 evaluation replicates; pilot status is saved in the manifest and prominently labeled in the report.
 
 Outputs are written to `analysis/research_runs/<run-id>/`. Models are trained from source each run; legacy joblib/cache files are never loaded. Model serialization and production deployment are outside this package's purpose.
 
@@ -59,3 +59,13 @@ Compare its mean/SE with a `validate` run's `survey_mean.json`. This validates t
 ## Limits
 
 The study is exploratory and retrospective. The corrected population differs from the historical cache population. SAQ timing can extend into early 2024; inputs are not a prospective 2023 baseline. Report refit distributions as learning sensitivity, not population confidence intervals. E4 adult-core and missingness variants change the measurement problem and must be named. No independent-year replication, longitudinal forecast, direct-cost baseline, clinical intervention evaluation or insurer-liability analysis is implied by this package.
+
+## Artifact integrity and verification
+
+Version 2 runs generate `REPORT.md` before hashing outputs and atomically marking completion. Reports, configuration and required scientific files are verified on reuse. Completed runs cannot be overwritten. Fit events are flushed incrementally to `fit_log.jsonl`, including warnings before failures, interruptions, and E2 base fits. Failed/interrupted/running runs cannot produce completed-results exports.
+
+The `report` command requires a new directory outside its source run. Legacy manifests remain read-only: their scientific inputs are hash-checked, while the original unhashed report is explicitly excluded. Derived reports and applicable tables record parent-manifest and generator hashes. Exports and figures also require fresh destinations. Exported run manifests describe the full local run; their person-level files are intentionally absent from the aggregate export, which has its own manifest.
+
+Weighted summaries require all declared folds/seeds to be finite and present; otherwise the metric is undefined, with valid/expected counts. Refit summaries expose valid/expected replicate counts. Random expenditure summaries use one deterministic seeded ranking and the same within-fold quota rule as the model policies.
+
+`configs/verification_2023.yaml` selects the original B3 models and seed 42 for a five-fold verification run. `python -m analysis.research_pipeline.verify_completed --help` describes the reproducible targeted-comparison and aggregate-export command. See `research-paper/19_VERIFICATION_AND_PR_READINESS.md` for exact commands, outputs and remaining paper requirements.

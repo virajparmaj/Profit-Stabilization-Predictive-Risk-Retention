@@ -46,6 +46,14 @@ class Config:
             raise ValueError("Unsupported or empty feature-block selection")
         if not self.models or not set(self.models) <= {"logistic", "xgboost", "random_forest"}:
             raise ValueError("Unsupported or empty model selection")
+        if len(set(self.blocks)) != len(self.blocks) or len(set(self.models)) != len(self.models):
+            raise ValueError("Duplicate model or feature-block selection")
+        if not self.capacities or len(set(self.capacities)) != len(self.capacities):
+            raise ValueError("Need nonempty distinct capacities")
+        if self.capacity not in self.capacities:
+            raise ValueError("Primary capacity must be in capacities")
+        if min(self.refits, self.design_replicates) < 2:
+            raise ValueError("Variability requires at least two replicates")
         if self.folds < 2 or not self.seeds or len(set(self.seeds)) != len(self.seeds):
             raise ValueError("Need at least two folds and distinct seeds")
         if not 0 < self.capacity < 1 or not all(0 < q < 1 for q in self.capacities):

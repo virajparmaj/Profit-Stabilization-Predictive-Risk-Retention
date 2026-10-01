@@ -3,9 +3,11 @@
 import hashlib
 import importlib.metadata
 import json
+import os
 import platform
 import shutil
 import subprocess
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -24,7 +26,16 @@ def write_json(path: Path, value) -> None:
             return item.item()
         raise TypeError(type(item).__name__)
 
-    path.write_text(json.dumps(value, indent=2, default=default, allow_nan=False) + "\n")
+    payload = json.dumps(value, indent=2, default=default, allow_nan=False) + "\n"
+    with tempfile.NamedTemporaryFile(mode="w", dir=path.parent, delete=False) as stream:
+        temporary = Path(stream.name)
+        stream.write(payload)
+        stream.flush()
+        os.fsync(stream.fileno())
+    try:
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
 
 
 def git_output(*args: str) -> str:
@@ -50,6 +61,7 @@ def start_run(name: str, config, experiment: str) -> tuple[Path, dict]:
         (snapshot / relative).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(source, snapshot / relative)
     manifest = {
+        "manifest_version": 2,
         "run_id": name,
         "started_utc": datetime.now(timezone.utc).isoformat(),
         "experiment": experiment,
@@ -74,6 +86,19 @@ def start_run(name: str, config, experiment: str) -> tuple[Path, dict]:
 def finish_run(
     out: Path, manifest: dict, status: str, elapsed: float, error: str | None = None
 ) -> None:
+    if json.loads((out / "manifest.json").read_text())["status"] == "complete":
+        raise ValueError("Completed runs are immutable")
+    if status == "complete":
+        from .reporting import report_text, required_outputs
+
+        missing = (
+            required_outputs(manifest)
+            - {str(f.relative_to(out)) for f in out.rglob("*") if f.is_file()}
+            - {"REPORT.md"}
+        )
+        if missing:
+            raise ValueError(f"Missing required scientific outputs: {sorted(missing)}")
+        (out / "REPORT.md").write_text(report_text(out, manifest))
     manifest.update(status=status, elapsed_seconds=elapsed, error=error)
     manifest["outputs"] = {
         str(p.relative_to(out)): sha256(p)

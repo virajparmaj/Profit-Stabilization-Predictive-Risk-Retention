@@ -16,7 +16,11 @@ from .reporting import verify_run
 
 
 def plot_spending(e1: Path, out: Path) -> None:
-    data = pd.read_csv(e1 / "policies_aggregate.csv")
+    from .config import Config
+    from .experiments import aggregate_policies
+
+    config = Config(**json.loads((e1 / "config.json").read_text()))
+    data = aggregate_policies(pd.read_parquet(e1 / "scores.parquet"), config)
     population = json.loads((e1 / "population_spending.json").read_text())
     p = 1 - population["zero_share"]
     data["cv_at_population_zero_mass"] = np.sqrt((data.positive_cv**2 + 1 - p) / p)
@@ -24,22 +28,30 @@ def plot_spending(e1: Path, out: Path) -> None:
         data.groupby(["block", "model", "requested_capacity"])[
             ["mean", "sd", "cv", "positive_cv", "zero_share", "cv_at_population_zero_mass"]
         ]
-        .mean()
+        .agg(lambda values: values.mean(skipna=False))
         .reset_index()
     )
     mean.to_csv(out / "spending_and_zero_mass.csv", index=False)
     fig, axes = plt.subplots(1, 3, figsize=(13, 4.2))
     for (block, model), g in mean.groupby(["block", "model"]):
-        if block not in ["D", "B3", "B4", "B5"]:
+        if block not in ["D", "B3", "B4", "B5", "random"]:
             continue
         for ax, key, label in zip(
             axes, ["mean", "sd", "cv"], ["Mean spending ($)", "Spending SD ($)", "CV (SD / mean)"]
         ):
-            ax.plot(g.requested_capacity * 100, g[key], marker="o", ms=3, label=f"{block} {model}")
+            ax.plot(
+                g.requested_capacity * 100,
+                g[key],
+                marker="o",
+                ms=3,
+                label="seeded random" if model == "random" else f"{block} {model}",
+            )
             ax.set(xlabel="Requested population capacity (%)", ylabel=label)
             ax.grid(alpha=0.2)
     axes[0].legend(fontsize=7)
-    fig.suptitle("Same-year expenditure at matched capacity · mean over two split seeds")
+    fig.suptitle(
+        f"Same-year spending · mean over {len(config.seeds)} split seeds · one seeded random ranking"
+    )
     fig.tight_layout()
     fig.savefig(out / "expenditure_frontier.png", dpi=180)
     plt.close(fig)
@@ -110,7 +122,12 @@ def plot_calibration(e1: Path, out: Path) -> None:
     table.to_csv(out / "calibration_bins.csv", index=False)
     fig, ax = plt.subplots(figsize=(5.5, 5))
     for (block, model), group in table[table.block == "B3"].groupby(["block", "model"]):
-        ax.plot(group.predicted, group.observed, "o-", label=f"{block} {model}")
+        ax.plot(
+            group.predicted,
+            group.observed,
+            "o-",
+            label="seeded random" if model == "random" else f"{block} {model}",
+        )
     ax.plot([0, 1], [0, 1], "k--", alpha=0.4)
     ax.set(
         xlabel="Mean predicted probability",
@@ -134,7 +151,7 @@ def main() -> None:
     runs = [ROOT / "analysis/research_runs" / name for name in [args.e1, args.e2]]
     for run in runs:
         verify_run(run)
-    args.output.mkdir(parents=True, exist_ok=True)
+    args.output.mkdir(parents=True, exist_ok=False)
     plot_spending(runs[0], args.output)
     plot_stability(runs[1], args.output)
     plot_calibration(runs[0], args.output)
@@ -142,7 +159,8 @@ def main() -> None:
         args.output / "figure_sources.json",
         {
             "runs": {run.name: sha256(run / "manifest.json") for run in runs},
-            "script_sha256": sha256(Path(__file__)),
+            "generator_sha256": {f.name: sha256(f) for f in Path(__file__).parent.glob("*.py")},
+            "outputs": {f.name: sha256(f) for f in args.output.iterdir() if f.is_file()},
             "interpretation": "Exploratory retrospective summaries; point clouds are learning variability, not population CIs",
         },
     )

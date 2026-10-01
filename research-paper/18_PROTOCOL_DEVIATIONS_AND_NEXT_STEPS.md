@@ -35,6 +35,10 @@ Formatting and import cleanup did not change the scientific function syntax tree
 
 Future runs now also save exact source copies and the dependency-lock hash. Main-run manifests already record code hashes but predate that source-copy addition. Source metadata for the legacy12 dictionary was corrected before the sensitivity runs; the earlier primary run uses dx10 and its computations are unaffected.
 
+## Verification completed on 2026-10-01
+
+[Verification report](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/19_VERIFICATION_AND_PR_READINESS.md) records the engineering verification plan now completed. Version 2 run manifests include the report before atomic finalization; historical runs stay untouched and explicitly retain their limited report integrity. Configuration-aware dictionaries, undefined-metric counts, incremental diagnostics, fresh aggregate exports and the seeded-random expenditure comparison are implemented. Ten E1 fits and the 80-refit E2 pilot matched original scores and membership exactly. The 46-test suite passed. No primary scientific definition or paper-readiness gate was changed.
+
 ## Highest-value follow-up
 
 First quantify reference-sample uncertainty for the membership difference and repeat the central result under the training-weight/population sensitivities. Then add the direct-cost comparator and frozen independent-year replication. These strengthen the observed modest contribution more than adding a new architecture or expanding the dashboard.

@@ -2,6 +2,8 @@
 
 **Date:** 2026-09-30. **Branch:** `viraj/research`. **Status:** executable core study and exploratory results; remaining paper-readiness requirements explicitly listed.
 
+**Verification update (2026-10-01):** [Verification report](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/19_VERIFICATION_AND_PR_READINESS.md) documents stronger manifest/report integrity, conservative missing-metric aggregation, durable fit diagnostics, the random comparator and exact targeted reruns. The original results below remain unchanged; current derived figures and reports are in `results/2026-10-01-verification/`.
+
 ## What changed
 
 The project now has a source-driven research package, not just an implementation plan. It reconstructs the adult SAQ cohort, corrects the diagnosis/function overlap, preserves missing-code meanings and income losses, splits by documented dwelling units, fits preprocessing inside training samples, and evaluates high-probability low-spending selection at explicit weighted capacity. The original notebooks, data and cached evidence remain preserved.

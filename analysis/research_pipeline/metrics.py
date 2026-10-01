@@ -82,7 +82,28 @@ def selected_spending(frame, selected, weights=None, threshold: float = 20000) -
         raise ValueError("Membership shape mismatch")
     capacity = float(w[selected].sum() / w.sum())
     if not w[selected].sum():
-        return {"n": 0, "weight_sum": 0.0, "capacity": capacity, "status": "empty"}
+        return {
+            "n": 0,
+            "weight_sum": 0.0,
+            "capacity": capacity,
+            "status": "empty",
+            **{
+                key: None
+                for key in [
+                    "mean",
+                    "sd",
+                    "median",
+                    "cv",
+                    "zero_share",
+                    "positive_cv",
+                    "tail_count",
+                    "tail_probability",
+                    "mean_excess",
+                    "relative_excess",
+                    "effective_n",
+                ]
+            },
+        }
     return {
         **spending(frame.TOTEXP23.to_numpy()[selected], w[selected], threshold),
         "capacity": capacity,

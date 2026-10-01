@@ -9,7 +9,6 @@ from .config import read_config
 from .dictionary import dictionary
 from .experiments import run_e1
 from .provenance import ROOT, finish_run, start_run, write_json
-from .reporting import render_report
 from .survey import taylor_mean
 
 VARIANTS = {
@@ -33,13 +32,21 @@ def run_variant(name: str, changes: dict, base, prefix: str) -> None:
         frame.to_parquet(out / "cohort.parquet", index=False)
         design.to_csv(out / "design.csv", index=False)
         write_json(out / "cohort_flow.json", flow)
-        write_json(out / "dictionary.json", dictionary(config.population, config.burden))
+        write_json(
+            out / "dictionary.json",
+            dictionary(config.population, config.burden, config.missingness),
+        )
         write_json(out / "survey_mean.json", taylor_mean(frame, design, "TOTEXP23"))
         run_e1(frame, design, config, out)
         finish_run(out, manifest, "complete", time.perf_counter() - started)
-        render_report(out)
-    except Exception as error:
-        finish_run(out, manifest, "failed", time.perf_counter() - started, str(error))
+    except BaseException as error:
+        finish_run(
+            out,
+            manifest,
+            "interrupted" if isinstance(error, (KeyboardInterrupt, SystemExit)) else "failed",
+            time.perf_counter() - started,
+            str(error),
+        )
         raise
 
 

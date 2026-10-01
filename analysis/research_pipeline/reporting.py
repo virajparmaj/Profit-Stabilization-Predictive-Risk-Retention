@@ -5,7 +5,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from .provenance import sha256
+from .aggregation import weighted_metrics
+from .provenance import sha256, write_json
 
 
 def markdown_table(frame: pd.DataFrame) -> str:
@@ -25,19 +26,73 @@ def markdown_table(frame: pd.DataFrame) -> str:
     return "\n".join(lines)
 
 
+def required_outputs(manifest: dict) -> set[str]:
+    names = {
+        "config.json",
+        "cohort_flow.json",
+        "dictionary.json",
+        "survey_mean.json",
+        "cohort.parquet",
+        "design.csv",
+        "REPORT.md",
+    }
+    if manifest["experiment"] in {"E1", "E4"}:
+        names |= {
+            "performance.csv",
+            "scores.parquet",
+            "splits.csv",
+            "policies_by_fold.csv",
+            "policies_aggregate.csv",
+            "fit_diagnostics.json",
+            "population_spending.json",
+            "fit_log.jsonl",
+        }
+    if manifest["experiment"] == "E2":
+        names |= {
+            "refit_metrics.csv",
+            "refit_summary.csv",
+            "endpoint.json",
+            "reference.parquet",
+            "splits.csv",
+            "failures.json",
+            "selection_frequencies.parquet",
+            "fit_log.jsonl",
+        }
+        from .refits import ANCHORS
+
+        for block, model in ANCHORS:
+            names |= {
+                f"{block}_{model}_{suffix}"
+                for suffix in ["base.parquet", "refit_scores.parquet", "diagnostics.json"]
+            }
+    return names
+
+
 def verify_run(out: Path) -> dict:
     manifest = json.loads((out / "manifest.json").read_text())
     if manifest["status"] != "complete":
         raise ValueError("Only complete runs can produce a completed-results report")
+    version = manifest.get("manifest_version", 1)
+    if version not in (1, 2):
+        raise ValueError("Unsupported manifest version")
+    if version == 2 and not required_outputs(manifest) <= set(manifest["outputs"]):
+        raise ValueError("Manifest missing required scientific outputs")
     for name, expected in manifest["outputs"].items():
         path = out / name
+        if not path.resolve().is_relative_to(out.resolve()):
+            raise ValueError("Output path escapes run directory")
         if not path.is_file() or sha256(path) != expected:
             raise ValueError(f"Run output changed or missing: {name}")
+    if "config_sha256" in manifest:
+        if (
+            sha256(out / "config.json") != manifest["config_sha256"]
+            or json.loads((out / "config.json").read_text()) != manifest["config"]
+        ):
+            raise ValueError("Run configuration changed")
     return manifest
 
 
-def render_report(out: Path) -> None:
-    manifest = verify_run(out)
+def report_text(out: Path, manifest: dict, policies=None, refit_summary=None) -> str:
     flow = json.loads((out / "cohort_flow.json").read_text())
     text = [
         f"# Research run {out.name}",
@@ -45,19 +100,25 @@ def render_report(out: Path) -> None:
         f"Analytic records: {flow['analytic_n']:,}; weight sum: {flow['weight_sum']:,.2f}.",
         "Exploratory same-year evaluation. No prospective, causal, clinical-need or insurer-profit claim.",
     ]
+    if manifest.get("pilot", False):
+        text += ["**PILOT / feasibility only: not final research evidence.**"]
+    if manifest.get("manifest_version", 1) == 1:
+        text += [
+            "Legacy manifest: scientific files are hash-verified; the original REPORT.md was not covered by the run manifest. This report is newly derived from verified scientific files."
+        ]
     if (out / "performance.csv").exists():
         perf = pd.read_csv(out / "performance.csv")
         rows = []
         for (block, model), group in perf.groupby(["block", "model"]):
-            total = group.weight_sum.sum()
             rows.append(
                 {
                     "block": block,
                     "model": model,
-                    **{
-                        key: (group[key] * group.weight_sum).sum() / total
-                        for key in ["auc", "brier", "average_precision"]
-                    },
+                    **weighted_metrics(
+                        group,
+                        ["auc", "brier", "average_precision"],
+                        manifest["config"]["folds"] * len(manifest["config"]["seeds"]),
+                    ),
                 }
             )
         text += [
@@ -65,7 +126,8 @@ def render_report(out: Path) -> None:
             markdown_table(pd.DataFrame(rows)),
             "Folds/seeds are paired evaluations, not independent samples. AUROC is not pooled across fitted targets.",
         ]
-        policies = pd.read_csv(out / "policies_aggregate.csv")
+        if policies is None:
+            policies = pd.read_csv(out / "policies_aggregate.csv")
         primary = policies[policies.requested_capacity == manifest["config"]["capacity"]]
         text += [
             "## Primary-capacity expenditure summaries",
@@ -86,7 +148,7 @@ def render_report(out: Path) -> None:
             "Intervals condition on fitted predictions and grouped folds; learning variation is separate.",
         ]
     if (out / "refit_summary.csv").exists():
-        summary = pd.read_csv(out / "refit_summary.csv")
+        summary = pd.read_csv(out / "refit_summary.csv") if refit_summary is None else refit_summary
         text += [
             "## Refit sensitivity",
             markdown_table(
@@ -99,10 +161,15 @@ def render_report(out: Path) -> None:
                         "jaccard_mean",
                         "population_disagreement_mean",
                         "capacity_mean",
+                        *[c for c in summary if c.endswith(("_valid", "_expected"))],
                     ]
                 ]
             ),
             "Mean/SD across training refits describe learning sensitivity, not confidence intervals from independent patients.",
+        ]
+    if manifest["experiment"] in {"E1", "E4"}:
+        text += [
+            "Random comparator: one deterministic seeded ranking with the same within-fold capacity rule; not an average over random policies."
         ]
     text += [
         "## Provenance",
@@ -110,4 +177,58 @@ def render_report(out: Path) -> None:
         f"Protocol/config SHA-256: `{manifest['config_sha256']}`.",
         "Full configuration, source hashes, software versions, warnings and output hashes are in manifest.json and diagnostics files.",
     ]
-    (out / "REPORT.md").write_text("\n\n".join(text) + "\n")
+    return "\n\n".join(text) + "\n"
+
+
+def render_report(out: Path, output: Path) -> None:
+    """Derive a report without mutating a completed run, including legacy runs."""
+    manifest = verify_run(out)
+    # Never consume an unhashed scientific file that appeared after finalization.
+    allowed = set(manifest["outputs"])
+    required = {"config.json", "cohort_flow.json"}
+    if manifest["experiment"] in {"E1", "E4"}:
+        required |= {"performance.csv", "scores.parquet", "policies_aggregate.csv"}
+    if manifest["experiment"] == "E2":
+        required |= {"refit_metrics.csv", "refit_summary.csv"}
+    if not required <= allowed:
+        raise ValueError("Derived reports require hashed scientific inputs")
+    for name in ["performance.csv", "primary_contrast.json", "refit_summary.csv"]:
+        if (out / name).exists() and name not in allowed:
+            raise ValueError(f"Unhashed scientific input: {name}")
+    if output.resolve().is_relative_to(out.resolve()):
+        raise ValueError("Derived output must be outside the immutable source run")
+    output.mkdir(parents=True, exist_ok=False)
+    policies, summary = None, None
+    from .config import Config
+
+    config = Config(**manifest["config"])
+    if "scores.parquet" in allowed:
+        from .experiments import aggregate_policies
+
+        policies = aggregate_policies(pd.read_parquet(out / "scores.parquet"), config)
+        policies.to_csv(output / "policies_aggregate.csv", index=False)
+    if "refit_metrics.csv" in allowed:
+        from .refits import refit_summary_table
+
+        summary = refit_summary_table(pd.read_csv(out / "refit_metrics.csv"), config.refits)
+        summary.to_csv(output / "refit_summary.csv", index=False)
+    from .dictionary import dictionary
+
+    write_json(
+        output / "dictionary.json", dictionary(config.population, config.burden, config.missingness)
+    )
+    (output / "REPORT.md").write_text(report_text(out, manifest, policies, summary))
+    write_json(
+        output / "derivation.json",
+        {
+            "parent_manifest_sha256": sha256(out / "manifest.json"),
+            "parent_run": out.name,
+            "legacy_report_integrity": (
+                "not verified; original report not consumed"
+                if manifest.get("manifest_version", 1) == 1
+                else "verified"
+            ),
+            "generator_sha256": {f.name: sha256(f) for f in Path(__file__).parent.glob("*.py")},
+            "outputs": {f.name: sha256(f) for f in output.iterdir() if f.is_file()},
+        },
+    )

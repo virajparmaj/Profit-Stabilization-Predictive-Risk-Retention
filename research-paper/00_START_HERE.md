@@ -1,8 +1,10 @@
 # Research-paper development pack
 
-**Updated:** 2026-09-30. **Status:** Core research pipeline implemented and exploratory E1–E4 results available; independent replication and remaining inference are pending.
+**Updated:** 2026-10-01. **Status:** Core research pipeline implemented and exploratory E1–E4 results available; independent replication and remaining inference are pending.
 
 [Folder index](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/00_START_HERE.md) · [Results register](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/10_RESULTS_REGISTER.md)
+
+[Verification report](/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/research-paper/19_VERIFICATION_AND_PR_READINESS.md) records the completed integrity fixes, exact numerical comparisons, and new derived evidence.
 
 ## Recommendation
 
@@ -15,7 +17,7 @@ The plausible novelty is the decision-relevant empirical comparison. Existing li
 ## Current state
 
 - **Implemented:** corrected source-built cohort, grouped model evaluation, weighted selection, full-pipeline refits, survey-aware conditional inference, sensitivity runner and immutable provenance.
-- **Completed:** 140 E1 fits, 800 main E2 refits, 80 pilot refits, 90 E4 fits, R survey benchmark, and 23 scientific tests.
+- **Completed:** 140 E1 fits, 800 main E2 refits, 80 pilot refits, 90 E4 fits, R survey benchmark, and the original 23 scientific tests. The verification pass now has 46 passing tests plus 10 repeat E1 fits and 80 repeat E2 refits.
 - **Main result:** B3 models have similar AUROC, but logistic averages 6.15% membership disagreement versus 10.54% for XGBoost at matched capacity. This is internal exploratory evidence, not a population confidence claim.
 - **Remaining:** independent-year replication, direct-cost baselines, fuller secondary/reference-population inference and final manuscript validation.
 
