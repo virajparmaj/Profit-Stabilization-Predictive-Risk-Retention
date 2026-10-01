@@ -15,3 +15,37 @@ analysis/.cache/
 __pycache__/
 .pytest_cache/
 analysis/research_runs/
+
+# Local research drafts, run exports and agent instructions
+/research-paper/
+/analysis/research_review/*.md
+/analysis/research_review/*.json
+/website-handoff/CODEX_PROMPT.md
+.codex/
+.agents/
+AGENTS.md
+CLAUDE.md
+
+# Generated notebook data, executed copies and preserved local originals
+/notebooks/*.csv
+/notebooks/*_executed.ipynb
+/notebooks/.local-backups/
+.ipynb_checkpoints/
+
+# Local environments, credentials, editor state and scratch work
+.venv/
+venv/
+.env
+.env.*
+!.env.example
+!.env.sample
+.vercel/
+.vscode/
+.idea/
+*.py[cod]
+*.log
+*.tmp
+*.swp
+*~
+/scratch/
+/tmp/

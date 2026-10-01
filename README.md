@@ -18,7 +18,7 @@ The source-built package in `analysis/research_pipeline/` adds:
 
 The research target is a low-expenditure/zero-ER/zero-inpatient label measured in the same year. High predicted probability selects the low-spending cohort. Cohort size, member identity, dollar SD and relative dispersion are evaluated separately.
 
-The verification pass now has **46 passing tests** and exact targeted reproduction of saved predictions and membership. Read `research-paper/19_VERIFICATION_AND_PR_READINESS.md` for results, current report commands and remaining paper requirements. Updated aggregate evidence and figures are in `research-paper/results/2026-10-01-verification/`.
+The research pipeline includes automated scientific and provenance tests. See [pipeline documentation](analysis/research_pipeline/README.md) for methods, commands and limitations.
 
 ## Run the study
 
@@ -34,19 +34,19 @@ python3.11 -m venv .venv-research
 .venv-research/bin/python -m analysis.research_pipeline run --experiment E2 --run-id my-e2
 ```
 
-Every run ID must be new. Source data, person-level scores, model environments and large outputs remain local under ignored directories. Aggregate results and scientific interpretation belong in `research-paper/`.
+Every run ID must be new. Source data, person-level scores, model environments and large outputs remain local under ignored directories. Paper drafts and generated experiment exports in `research-paper/` are local-only and are not included in a fresh clone.
 
-See `analysis/research_pipeline/README.md` for the exact statistical choices, E4 robustness runner, R survey benchmark and limitations. See `research-paper/16_IMPLEMENTATION_PROMPT.md` for the reusable execution prompt.
+See `analysis/research_pipeline/README.md` for the exact statistical choices, E4 robustness runner, R survey benchmark and limitations.
 
 ## Research materials
 
 | Location | Role |
 |---|---|
-| `research-paper/` | Research questions, prior art, protocol, implementation plan, evidence register and paper blueprint |
+| `research-paper/` | Ignored local paper drafts, planning notes and generated exports |
 | `analysis/research_pipeline/` | Corrected executable study package and pinned environment |
 | `analysis/tests/research_pipeline/` | Synthetic scientific invariants and optional local-data integration checks |
 | `analysis/research_runs/` | Ignored immutable local run outputs |
-| `analysis/research_review/` | Historical audit and exact cached-score rechecks |
+| `analysis/research_review/` | Historical cached-score verification script; generated audit notes/results stay local |
 | `notebooks/` | Original exploratory notebooks, preserved for provenance |
 | `analysis/src/` and `analysis/ANALYSIS_REPORT.md` | Historical analysis and figure pipeline |
 | `site/` | Existing analytics presentation; not evidence of a validated production inference service |

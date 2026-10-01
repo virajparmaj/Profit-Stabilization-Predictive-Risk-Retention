@@ -1,7 +1,0 @@
-{
-  "threshold": 741.0,
-  "fixed_across_refits": true,
-  "n_train": 5863,
-  "n_calibration": 1944,
-  "n_reference": 1969
-}
