@@ -58,3 +58,23 @@ The historical pipeline contained a reversed probability-selection rule in its s
 The new implementation tests a bounded empirical contribution: whether membership reproducibility and expenditure evaluation change the conclusions drawn from ordinary classifier comparisons. Those evaluation concepts already exist in prior research; the contribution must come from the actual comparative findings and their robustness.
 
 The study remains exploratory and retrospective. Independent-year replication, prospective panel validation, direct-cost baselines and broader uncertainty analysis are separate research requirements. Neither successful tests nor a working model pipeline alone make a completed research paper.
+
+## Contributing and local artifacts
+
+Keep source code, tests, dependency locks, setup instructions and deliberate presentation assets tracked. Keep paper drafts, agent instructions, experiment runs, execution logs, temporary files, credentials and intermediate data local. `.gitignore` excludes these directories and file types without ignoring Markdown documentation generally. Environment templates named `.env.example` or `.env.sample` can be committed with placeholder values only.
+
+The original [notebooks](notebooks/README.md) require local MEPS data and produce ignored processed tables. Notebook outputs and execution counts should be cleared before committing. A fresh clone does not contain processed datasets, saved model predictions or executed notebook copies.
+
+The `site/public/data/` files are intentional runtime assets fetched by the dashboard. They remain tracked so the site works from a fresh clone. To run the site:
+
+```sh
+cd site
+npm ci
+npm run dev
+# Production build:
+npm run build
+```
+
+`npm run build` uses the committed site data. Regenerating it with `npm run build:data` additionally requires `data_raw/h251.csv` and `data_processed/meps_model_ready_2023_low_risk_business_proxies_v2.csv`; the latter is a separate legacy input, not the corrected research pipeline's output.
+
+The `website-handoff/data/` confidence-interval registry and chart datasets, supporting metrics, figures and schema documentation are retained because historical figure scripts and `analysis/src/check_consistency.py` consume them. They describe historical findings, not new experiments or deployment guarantees.

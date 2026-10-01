@@ -1,12 +1,11 @@
 # Website Handoff — MEPS 2023 Cost Tail-Risk Analysis
 
 **Package location:** `<analysis-repo>/website-handoff/`
-**Absolute path:** `/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/website-handoff/`
-**Target website:** `/Users/veerr_89/Work/website/risk-stability-insights`
+**Consumer:** a chart presentation using the documented CSV/JSON schemas.
 **Source of truth for all numbers:** this file, plus `data/` and `supporting/insight_metrics.json`
 **Full analytical write-up (background, not required reading):** `../analysis/ANALYSIS_REPORT.md`
 
-This package is the complete, curated output of a focused tail-risk analysis of the MEPS 2023 data behind the Risk & Stability Insights platform. Everything here has been validated. Nothing here should be recomputed, rounded differently, or reinterpreted during implementation.
+This package is the complete, curated output of a focused tail-risk analysis of the MEPS 2023 data behind the Risk & Stability Insights platform. Everything here has been validated. The tables and confidence-interval registry document the historical analysis. Recompute with the source scripts when changing inputs; check consistency before publishing.
 
 ---
 
@@ -265,15 +264,13 @@ Four specific follow-up questions, in priority order.
 
 ## File manifest
 
-Package root: `/Users/veerr_89/Work/projects/Profit-Stabilization-Predictive-Risk-Retention/website-handoff/`
-Reachable from the website repo root at: `../../projects/Profit-Stabilization-Predictive-Risk-Retention/website-handoff/`
+Package root: `website-handoff/`, relative to the repository root.
 
 ### Documents
 
 | Filename | Purpose | Source / original | How to use it |
 |---|---|---|---|
 | `HANDOFF.md` | This file. Curated findings, numbers, page order, methodology, limitations | Authored from `analysis/ANALYSIS_REPORT.md` | **Read first.** The single source of truth for all copy and numbers |
-| `CODEX_PROMPT.md` | The implementation brief for the website build | Authored | Paste into Codex inside the website repo |
 
 ### Assets — static PNG figures (`assets/`)
 
