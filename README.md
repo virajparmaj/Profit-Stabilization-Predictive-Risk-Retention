@@ -1,167 +1,83 @@
-# Profit-Stabilization-Predictive-Risk-Retention
+# Low-Spending Healthcare Cohort Research
 
-Recap with Prof. Jing and review
+This MEPS project studies whether models judged by classification accuracy also produce reproducible cohort membership and favorable expenditure distributions at the same population capacity.
 
-1. why ER is used ?
-2. check cost differnce ?
-3. behvaioural topics, deep research ?
-4. how was the model used ? needs clarity? how is better than existing models?
+The original repository name, **Profit-Stabilization-Predictive-Risk-Retention**, reflects its initial motivation. The available data measure retrospective all-payer expenditure. They do not establish insurer profit, retention, clinical need or future cost effects.
 
-research spring 2026
+## Research implementation
 
-1. innovative insurance
-2. Variable annunities, use this premium for investment
+The source-built package in `analysis/research_pipeline/` adds:
 
-## Research Question
+- A corrected adult SAQ cohort with documented eligibility and survey weights.
+- Diagnosis and functional counts that preserve unknown responses and remove construct overlap.
+- Shared dwelling-unit validation splits, training-only preprocessing and training-derived outcome thresholds.
+- Paired logistic/XGBoost feature-block comparisons, weighted metrics and matched-capacity selection.
+- Full-pipeline training refits on fixed reference people, with membership disagreement and Jaccard overlap.
+- Absolute and relative spending summaries, survey-aware conditional intervals, and declared robustness variants.
+- Immutable run manifests, meaningful scientific tests and aggregate research reports.
 
-**Can low-risk health-care members be reliably identified using a reduced, behavior-oriented feature set, and what is the minimum predictive structure needed to stabilize cost-risk segmentation under uncertainty?**
+The research target is a low-expenditure/zero-ER/zero-inpatient label measured in the same year. High predicted probability selects the low-spending cohort. Cohort size, member identity, dollar SD and relative dispersion are evaluated separately.
 
-This repository contains a **complete, research-to-deployment pipeline** built on MEPS (Medical Expenditure Panel Survey) data to study **low-risk member identification**, **segmentation stability**, and **uncertainty-aware pricing insights**.
+The research pipeline includes automated scientific and provenance tests. See [pipeline documentation](analysis/research_pipeline/README.md) for methods, commands and limitations.
 
-The project combines:
+## Run the study
 
-* rigorous statistical / ML experimentation,
-* a deployable production model,
-* and an interactive analytics web platform that operationalizes the research findings.
+Download the public [2023 HC-251 MEPS release](https://meps.ahrq.gov/data_stats/download_data/pufs/h251/h251doc.shtml) and place its CSV at `data_raw/h251.csv`. From the repository root:
 
----
+```sh
+python3.11 -m venv .venv-research
+.venv-research/bin/python -m pip install -r analysis/research_pipeline/requirements-lock.txt
+.venv-research/bin/python -m pytest analysis/tests/research_pipeline -q
+.venv-research/bin/python -m analysis.research_pipeline validate --run-id my-validation
+.venv-research/bin/python -m analysis.research_pipeline run --experiment E1 --run-id my-e1 --inference
+.venv-research/bin/python -m analysis.research_pipeline run --experiment E2 --run-id my-e2-pilot --pilot
+.venv-research/bin/python -m analysis.research_pipeline run --experiment E2 --run-id my-e2
+```
 
-## What This Repository Does (End-to-End)
+Every run ID must be new. Source data, person-level scores, model environments and large outputs remain local under ignored directories. Paper drafts and generated experiment exports in `research-paper/` are local-only and are not included in a fresh clone.
 
-### 1. **Data → Model Pipeline (Fully Implemented)**
+See `analysis/research_pipeline/README.md` for the exact statistical choices, E4 robustness runner, R survey benchmark and limitations.
 
-* Accepts **processed MEPS person-year CSVs** (e.g., HC-251 2023).
-* Enforces **strict leakage control** (label-defining cost variables excluded from predictors).
-* Constructs cumulative feature blocks (B0 → B5) to identify the **minimum predictive structure**.
-* Trains and evaluates multiple model families (Logistic, RF, XGBoost).
-* Selects a **deployable production model** based on:
+## Research materials
 
-  * discrimination,
-  * calibration,
-  * and bootstrap stability.
+| Location | Role |
+|---|---|
+| `research-paper/` | Ignored local paper drafts, planning notes and generated exports |
+| `analysis/research_pipeline/` | Corrected executable study package and pinned environment |
+| `analysis/tests/research_pipeline/` | Synthetic scientific invariants and optional local-data integration checks |
+| `analysis/research_runs/` | Ignored immutable local run outputs |
+| `analysis/research_review/` | Historical cached-score verification script; generated audit notes/results stay local |
+| `notebooks/` | Original exploratory notebooks, preserved for provenance |
+| `analysis/src/` and `analysis/ANALYSIS_REPORT.md` | Historical analysis and figure pipeline |
+| `site/` | Existing analytics presentation; not evidence of a validated production inference service |
 
-> Final deployed model: **XGBoost, B3_chronic block**
-> (behavior + mental health + functional status + chronic burden)
+## Interpreting the evidence
 
----
+The historical pipeline contained a reversed probability-selection rule in its stability notebook, a quantile-based headcount measure that could not establish member stability, overlapping diagnosis/function constructs, and survey/missingness issues. Its claim that B3 was the “minimum stable model” is not an established conclusion. Historical notebooks and charts are preserved rather than silently rewritten.
 
-### 2. **Model Ladder & Stability Evidence (Fully Implemented)**
+The new implementation tests a bounded empirical contribution: whether membership reproducibility and expenditure evaluation change the conclusions drawn from ordinary classifier comparisons. Those evaluation concepts already exist in prior research; the contribution must come from the actual comparative findings and their robustness.
 
-Instead of a single opaque model, the project builds a **model ladder**:
+The study remains exploratory and retrospective. Independent-year replication, prospective panel validation, direct-cost baselines and broader uncertainty analysis are separate research requirements. Neither successful tests nor a working model pipeline alone make a completed research paper.
 
-| Block  | Description               | Purpose                  |
-| ------ | ------------------------- | ------------------------ |
-| B0     | Behavior only             | Baseline signal          |
-| B1     | + Mental health           | Early improvement        |
-| B2     | + Functional limits       | Structural stability     |
-| **B3** | **+ Chronic burden**      | **Minimum stable model** |
-| B4     | + SES & insurance         | Incremental gain         |
-| B5     | + Utilization (non-label) | Upper-bound benchmark    |
+## Contributing and local artifacts
 
-Each block is evaluated for:
+Keep source code, tests, dependency locks, setup instructions and deliberate presentation assets tracked. Keep paper drafts, agent instructions, experiment runs, execution logs, temporary files, credentials and intermediate data local. `.gitignore` excludes these directories and file types without ignoring Markdown documentation generally. Environment templates named `.env.example` or `.env.sample` can be committed with placeholder values only.
 
-* AUC / Brier score,
-* calibration,
-* **bootstrap variance of low-risk segment size**.
+The original [notebooks](notebooks/README.md) require local MEPS data and produce ignored processed tables. Notebook outputs and execution counts should be cleared before committing. A fresh clone does not contain processed datasets, saved model predictions or executed notebook copies.
 
-This directly answers the research question:
-**B3 is the minimum predictive structure that stabilizes segmentation under uncertainty.**
+The `site/public/data/` files are intentional runtime assets fetched by the dashboard. They remain tracked so the site works from a fresh clone. To run the site:
 
----
+```sh
+cd site
+nvm use # Node.js 24, as pinned in .nvmrc (or use another version manager)
+npm ci
+npm run dev
+# Production build:
+npm run build
+```
 
-### 3. **Production Inference API (Implemented)**
+For Vercel, use root directory `site`, build command `npm run build`, and output directory `dist`. The `engines.node` setting pins Node.js 24 for deployments; Node.js 20 is no longer supported for new Vercel deployments as of October 1, 2026.
 
-* The selected model pipeline (preprocessing + encoding + classifier) is serialized (`.joblib`).
-* A FastAPI service exposes:
+`npm run build` uses the committed site data. Regenerating it with `npm run build:data` additionally requires `data_raw/h251.csv` and `data_processed/meps_model_ready_2023_low_risk_business_proxies_v2.csv`; the latter is a separate legacy input, not the corrected research pipeline's output.
 
-  * batch scoring,
-  * single-member scoring,
-  * schema validation via a model card.
-* The API rejects inputs with missing required features (as shown in production UI).
-
-No retraining is required at inference time.
-
----
-
-### 4. **Interactive Analytics Web Platform (Implemented)**
-
-A deployed web application operationalizes the research:
-
-**Core capabilities**
-
-* Upload and validate MEPS-derived datasets (2023 supported).
-* Run **live backend inference** using the production model.
-* Explore **member-level risk scores** and **population-level segmentation**.
-* Visualize:
-
-  * clustering structure (t-SNE),
-  * low-risk profiles,
-  * behavioral and chronic burden signatures.
-* Quantify **uncertainty and stability** via bootstrap simulation.
-* Run **fairness and compliance diagnostics**.
-* Generate **research-ready reports** (PDF + CSV exports).
-
-The UI reflects insurer-style analytics rather than a toy demo.
-
----
-
-## What Is Dynamic vs Static Right Now
-
-### ✅ Fully Dynamic
-
-* CSV ingestion for MEPS-aligned, model-ready files.
-* Backend model scoring (real predictions).
-* Segmentation, clustering, and summaries.
-* Bootstrap stability metrics.
-* Fairness metrics computed from scored data.
-* Report generation using live results.
-
-### ⚠️ Partially Static / Placeholder
-
-* Some UI explanations (text blocks) are descriptive rather than computed.
-* Certain visual labels (e.g., segment names) are rule-based, not learned.
-* Model selection UI is locked to the production model (by design).
-* Multi-year (panel-to-panel) temporal validation is not yet automated in the UI.
-
-These are **deliberate design choices**, not architectural gaps.
-
----
-
-## Validity Across MEPS Years
-
-The pipeline is **year-agnostic by construction**, provided that:
-
-* the input file is a **single MEPS person-year**,
-* variables are harmonized to the expected schema,
-* labels are recomputed per year.
-
-This allows:
-
-* retraining on new years (e.g., 2024, 2025),
-* cross-year stability testing,
-* future panel-based volatility modeling.
-
----
-
-## Why This Is Not Just a Dashboard
-
-This project is not a visualization layer on top of a model.
-
-It is:
-
-* a **research artifact**,
-* a **deployable inference system**,
-* and an **auditable analytics product**.
-
-Every chart corresponds to a model, statistic, or bootstrap procedure implemented in code and validated empirically.
-
----
-
-## Future Extensions (Planned)
-
-* Temporal validation across MEPS panels.
-* SHAP-based explainability comparisons (B3 vs B5).
-* Fairness audits under alternative SES definitions.
-* Policy simulation (retention / pricing stress tests).
-* Automated ingestion of raw MEPS releases.
-* Multi-model comparison UI (unlock B4/B5 for research mode).
+The `website-handoff/data/` confidence-interval registry and chart datasets, supporting metrics, figures and schema documentation are retained because historical figure scripts and `analysis/src/check_consistency.py` consume them. They describe historical findings, not new experiments or deployment guarantees.
