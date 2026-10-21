@@ -145,6 +145,20 @@ def test_export_refuses_existing_target_and_excludes_person_files(tmp_path):
         export_run(source, output)
 
 
+def test_replication_report_preserves_audited_year_dictionary(tmp_path):
+    source = tmp_path / "source"
+    manifest = make_run(source)
+    entries = [{"feature": "TOTEXP23", "source": ["TOTEXP21"], "data_year": 2021}]
+    provenance.write_json(source / "dictionary.json", entries)
+    manifest.update(data_year=2021, scope="Same-year repetition; not temporal transport")
+    manifest["outputs"]["dictionary.json"] = provenance.sha256(source / "dictionary.json")
+    provenance.write_json(source / "manifest.json", manifest)
+    output = tmp_path / "derived"
+    reporting.render_report(source, output)
+    assert json.loads((output / "dictionary.json").read_text()) == entries
+    assert "Data year: 2021" in (output / "REPORT.md").read_text()
+
+
 @pytest.mark.parametrize(
     "exception,status", [(RuntimeError, "failed"), (KeyboardInterrupt, "interrupted")]
 )
