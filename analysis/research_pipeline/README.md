@@ -58,7 +58,7 @@ Compare its mean/SE with a `validate` run's `survey_mean.json`. This validates t
 
 ## Limits
 
-The study is exploratory and retrospective. The corrected population differs from the historical cache population. SAQ timing can extend into early 2024; inputs are not a prospective 2023 baseline. Report refit distributions as learning sensitivity, not population confidence intervals. E4 adult-core and missingness variants change the measurement problem and must be named. No independent-year replication, longitudinal forecast, direct-cost baseline, clinical intervention evaluation or insurer-liability analysis is implied by this package.
+The study is exploratory and retrospective. The corrected population differs from the historical cache population. SAQ timing can extend into early 2024; inputs are not a prospective 2023 baseline. Report refit distributions as learning sensitivity, not population confidence intervals. E4 adult-core and missingness variants change the measurement problem and must be named. The optional extensions below add a nonoverlapping-panel repetition and a direct-cost comparator. No longitudinal forecast, clinical intervention evaluation or insurer-liability analysis is implied.
 
 ## Artifact integrity and verification
 
@@ -68,4 +68,27 @@ The `report` command requires a new directory outside its source run. Legacy man
 
 Weighted summaries require all declared folds/seeds to be finite and present; otherwise the metric is undefined, with valid/expected counts. Refit summaries expose valid/expected replicate counts. Random expenditure summaries use one deterministic seeded ranking and the same within-fold quota rule as the model policies.
 
-`configs/verification_2023.yaml` selects the original B3 models and seed 42 for a five-fold verification run. `python -m analysis.research_pipeline.verify_completed --help` describes the reproducible targeted-comparison and aggregate-export command. The comparison requires original local run directories; paper drafts and dated exports under `research-paper/` are ignored and unavailable in a fresh clone. Independent-year replication, direct-cost baselines and broader uncertainty remain separate research requirements.
+`configs/verification_2023.yaml` selects the original B3 models and seed 42 for a five-fold verification run. `python -m analysis.research_pipeline.verify_completed --help` describes the reproducible targeted-comparison and aggregate-export command. The comparison requires original local run directories; paper drafts and dated exports under `research-paper/` are ignored and unavailable in a fresh clone. Broader joint uncertainty and fixed-model temporal transport remain outside the current conditional, same-year analysis.
+
+## Direct expenditure and nonoverlapping-panel extensions
+
+The optional two-part comparator combines logistic positive-spending occurrence with a Gamma log-link positive-cost model. It uses B3 features, paired outer folds and the same 200 PSU training perturbations as E2. Its reciprocal-cost score is a ranking, not a calibrated probability of the binary target.
+
+```sh
+.venv-research/bin/python -m analysis.research_pipeline.paper_extensions --run-id my-cost
+.venv-research/bin/python -m analysis.research_pipeline run --experiment E1 --run-id my-rf --config analysis/research_pipeline/configs/paper_rf.yaml
+.venv-research/bin/python -m analysis.research_pipeline run --experiment E2 --run-id my-unweighted --config analysis/research_pipeline/configs/paper_unweighted.yaml
+```
+
+The `paper_adult_core.yaml` and `paper_legacy_zero.yaml` configurations provide the other E2 specification sensitivities. Each E2 run fits all four fixed anchors, regardless of the E1 model list. RF has outer-fold evaluation only; no RF stability result is implied.
+
+For the 2021 repetition, obtain the [official HC-233 Stata release](https://meps.ahrq.gov/data_stats/download_data/pufs/h233/h233doc.shtml), convert it with `pandas.read_stata(..., convert_categoricals=False).to_csv(..., index=False)`, and save it as `data_raw/h233.csv`. Keep the archive and its checksum locally. The adapter checks panel/person/dwelling overlap against HC-251, maps audited annual suffixes, and records actual-year provenance and nominal dollar units. The missing COVID field is an unused schema placeholder; configurations requesting it are rejected.
+
+```sh
+.venv-research/bin/python -m analysis.research_pipeline.replication --experiment E1 --run-id my-2021-e1
+.venv-research/bin/python -m analysis.research_pipeline.replication --experiment E2 --run-id my-2021-e2
+```
+
+This refits within each year; it does not transport a fixed model across years. Shared survey geography and 2021 extended panels limit independence interpretations. `paper_evidence.py` generates aggregate tables and vector/raster figures from manifest-verified runs, using its explicit `SOURCES` mapping. Set those run IDs to the intended completed experiments before running it with a fresh `--output` directory. The evidence manifest binds output hashes to parent manifests and generating code.
+
+`conditional_reference` in `paper_extensions.py` computes a fixed-ensemble, fixed-membership reference-design sensitivity; it does not reapply quotas or estimate joint population/training uncertainty. `validate_membership.R` independently checks the corresponding Taylor mean/SE with R survey. The expenditure-tail supplement holds selection fixed and winsorizes only descriptive evaluation costs, never training data. All supplemental comparisons are exploratory.
