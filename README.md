@@ -69,11 +69,14 @@ The `site/public/data/` files are intentional runtime assets fetched by the dash
 
 ```sh
 cd site
+nvm use # Node.js 24, as pinned in .nvmrc (or use another version manager)
 npm ci
 npm run dev
 # Production build:
 npm run build
 ```
+
+For Vercel, use root directory `site`, build command `npm run build`, and output directory `dist`. The `engines.node` setting pins Node.js 24 for deployments; Node.js 20 is no longer supported for new Vercel deployments as of October 1, 2026.
 
 `npm run build` uses the committed site data. Regenerating it with `npm run build:data` additionally requires `data_raw/h251.csv` and `data_processed/meps_model_ready_2023_low_risk_business_proxies_v2.csv`; the latter is a separate legacy input, not the corrected research pipeline's output.
 

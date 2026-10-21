@@ -47,5 +47,8 @@ venv/
 *.tmp
 *.swp
 *~
+*.tsbuildinfo
+.coverage
+htmlcov/
 /scratch/
 /tmp/
