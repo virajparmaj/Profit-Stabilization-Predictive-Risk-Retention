@@ -1,0 +1,21 @@
+protocol: meps-low-spending-replication-2021-v1
+raw: data_raw/h233.csv
+population: adult_saq
+burden: dx10
+missingness: explicit
+label: training_weighted
+weighted_training: true
+folds: 5
+seeds: [42, 2026]
+blocks: [B3]
+models: [logistic, xgboost]
+capacity: 0.30
+capacities: [0.10, 0.20, 0.30, 0.40, 0.50]
+tail_threshold: 20000
+refits: 200
+design_replicates: 1000
+refit_seed: 1842
+design_seed: 9142
+tie_seed: 7342
+xgb_estimators: 600
+threads: 2

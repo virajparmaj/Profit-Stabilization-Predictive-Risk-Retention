@@ -47,6 +47,20 @@ def required_outputs(manifest: dict) -> set[str]:
             "population_spending.json",
             "fit_log.jsonl",
         }
+    if manifest["experiment"] == "cost_baseline":
+        names |= {
+            "cost_scores.parquet",
+            "cost_performance.csv",
+            "cost_policies.csv",
+            "reference.parquet",
+            "splits.csv",
+            "endpoint.json",
+            "two_part_base.parquet",
+            "cost_refit_metrics.csv",
+            "two_part_refit_scores.parquet",
+            "failures.json",
+            "fit_log.jsonl",
+        }
     if manifest["experiment"] == "E2":
         names |= {
             "refit_metrics.csv",
@@ -102,6 +116,8 @@ def report_text(out: Path, manifest: dict, policies=None, refit_summary=None) ->
     ]
     if manifest.get("pilot", False):
         text += ["**PILOT / feasibility only: not final research evidence.**"]
+    if "data_year" in manifest:
+        text += [f"Data year: {manifest['data_year']}. {manifest.get('scope', '')}"]
     if manifest.get("manifest_version", 1) == 1:
         text += [
             "Legacy manifest: scientific files are hash-verified; the original REPORT.md was not covered by the run manifest. This report is newly derived from verified scientific files."
@@ -167,6 +183,32 @@ def report_text(out: Path, manifest: dict, policies=None, refit_summary=None) ->
             ),
             "Mean/SD across training refits describe learning sensitivity, not confidence intervals from independent patients.",
         ]
+    if manifest["experiment"] == "cost_baseline":
+        perf = pd.read_csv(out / "cost_performance.csv")
+        perf = perf.rename(columns={"rank_auc": "auc"})
+        text += [
+            "## Direct-expenditure comparator",
+            markdown_table(
+                pd.DataFrame(
+                    [
+                        weighted_metrics(
+                            perf,
+                            ["auc", "cost_mae", "cost_rmse"],
+                            manifest["config"]["folds"] * len(manifest["config"]["seeds"]),
+                        )
+                    ]
+                )
+            ),
+            "AUROC evaluates ranking only: reciprocal predicted cost is not a calibrated label probability. RMSE is the weight-mass average of fold RMSEs.",
+        ]
+        metrics = pd.read_csv(out / "cost_refit_metrics.csv")
+        from .aggregation import refit_statistics
+
+        rows = [
+            {"metric": key, **refit_statistics(metrics[key], manifest["config"]["refits"])}
+            for key in ["rank_auc", "jaccard", "population_disagreement", "mean", "sd", "cv"]
+        ]
+        text += ["## Direct-cost refit sensitivity", markdown_table(pd.DataFrame(rows))]
     if manifest["experiment"] in {"E1", "E4"}:
         text += [
             "Random comparator: one deterministic seeded ranking with the same within-fold capacity rule; not an average over random policies."
@@ -186,8 +228,12 @@ def render_report(out: Path, output: Path) -> None:
     # Never consume an unhashed scientific file that appeared after finalization.
     allowed = set(manifest["outputs"])
     required = {"config.json", "cohort_flow.json"}
+    if manifest.get("manifest_version", 1) == 2 or "data_year" in manifest:
+        required.add("dictionary.json")
     if manifest["experiment"] in {"E1", "E4"}:
         required |= {"performance.csv", "scores.parquet", "policies_aggregate.csv"}
+    if manifest["experiment"] == "cost_baseline":
+        required |= {"cost_performance.csv", "cost_refit_metrics.csv"}
     if manifest["experiment"] == "E2":
         required |= {"refit_metrics.csv", "refit_summary.csv"}
     if not required <= allowed:
@@ -214,9 +260,14 @@ def render_report(out: Path, output: Path) -> None:
         summary.to_csv(output / "refit_summary.csv", index=False)
     from .dictionary import dictionary
 
-    write_json(
-        output / "dictionary.json", dictionary(config.population, config.burden, config.missingness)
+    # Preserve audited year-specific aliases and unavailable-variable metadata.
+    # Only legacy dictionaries need regeneration from the corrected definitions.
+    entries = (
+        json.loads((out / "dictionary.json").read_text())
+        if "dictionary.json" in required
+        else dictionary(config.population, config.burden, config.missingness)
     )
+    write_json(output / "dictionary.json", entries)
     (output / "REPORT.md").write_text(report_text(out, manifest, policies, summary))
     write_json(
         output / "derivation.json",
